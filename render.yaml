@@ -1,0 +1,11 @@
+# Render: статический сайт без сборки, отдаём файлы из корня
+services:
+  - type: web
+    name: page-of-the-day
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
