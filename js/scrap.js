@@ -14,7 +14,7 @@
     best: ['Лучший момент дня', ['Где это было?', 'Кто был рядом?', 'Что играло в наушниках?']],
     love: ['Маленькие радости', ['Что было вкусного?', 'Кто меня рассмешил?', 'Что я увидела красивого?']]
   };
-  const st = { profile: null, days: [], friends: [], cur: null, curFriend: null, ro: false, sel: null, scale: 1, urls: new Map(), mode: 'result', draft: null };
+  const st = { mySt: [], profile: null, days: [], friends: [], cur: null, curFriend: null, ro: false, sel: null, scale: 1, urls: new Map(), mode: 'result', draft: null };
   const toast = (m, ms = 2600) => { const t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, ms); };
 
   /* ---------- хранилище ---------- */
@@ -208,6 +208,7 @@
       case 'photo': return `<div class="ph fr-${it.frame || 'none'}" style="--sc:${it.sc || '#fff'}"><img src="${url(blobs, it.key)}" alt=""></div>`;
       case 'video': return `<div class="ph fr-${it.frame || 'none'}" style="--sc:${it.sc || '#fff'}"><video src="${url(blobs, it.key)}" muted loop autoplay playsinline></video></div>`;
       case 'sticker': return `<div class="st">${PV.stickerSvg(it.name, it.color)}</div>`;
+      case 'cutout': return `<div class="st cut"><img src="${url(blobs, it.key)}" alt=""></div>`;
       case 'oc': return PV.ocSvg(prof);
       case 'text': return `<div class="tx${it.bgs === 'pill' ? ' bg-pill' : it.bgs === 'torn' ? ' bg-torn' : ''}" style="font-family:'${it.font}';font-size:${it.size}px;color:${it.color};text-align:${it.align || 'center'};${it.bgs === 'pill' ? 'background:#fff;' : it.bgs === 'torn' ? '' : it.bgs === 'mark' ? `background:linear-gradient(transparent 55%,${it.mark || '#ffd1e3'} 55%);` : ''}">${U.esc(it.text)}</div>`;
       case 'date': return `<div class="wd wd-${it.style}" style="color:${it.color};font-size:${Math.round(it.w / (it.style === 'mini' ? 15 : it.style === 'big' ? 12 : 9))}px">${fmtDateWidget(it, day)}</div>`;
@@ -268,7 +269,8 @@
       const t = it.type;
       $('[data-it=edit]').hidden = !['text', 'link', 'template', 'secret', 'weather', 'date'].includes(t);
       $('[data-it=frame]').hidden = !['photo', 'video'].includes(t);
-      $('[data-it=color]').hidden = ['photo', 'video', 'oc'].includes(t);
+      $('[data-it=color]').hidden = ['photo', 'video', 'oc', 'cutout'].includes(t);
+      $('[data-it=cut]').hidden = t !== 'photo';
     }
     if (st.ro) $('#tools').hidden = true;
   }
@@ -341,11 +343,32 @@
   function bindSwatches(root, fn) { root.querySelectorAll('[data-c]').forEach(b => b.onclick = () => fn(b.dataset.c)); const o = root.querySelector('[data-own]'); if (o) o.oninput = () => fn(o.value); }
 
   function sheetStickers(cat) {
-    const cats = (vibeStickers().length ? ['Для тебя'] : []).concat(Object.keys(PV.STICKER_CATS)); cat = cat || cats[0];
-    const listOf = c => c === 'Для тебя' ? vibeStickers() : PV.STICKER_CATS[c];
-    sheet(T('Стикеры'), `<div class="chips cats">${cats.map(c => `<button type="button" data-cat="${c}" class="${c === cat ? 'on' : ''}">${T(c)}</button>`).join('')}<button type="button" data-cat="oc">${T('Мой персонаж')}</button></div><div class="grid-st">${listOf(cat).map(n => `<button type="button" data-st="${n}" aria-label="${n}">${PV.stickerSvg(n)}</button>`).join('')}</div>`, r => {
+    const cats = ['Мои'].concat(vibeStickers().length ? ['Для тебя'] : [], Object.keys(PV.STICKER_CATS)); cat = cat || (st.mySt.length ? 'Мои' : cats[1]);
+    const listOf = c => c === 'Для тебя' ? vibeStickers() : c === 'Мои' ? [] : PV.STICKER_CATS[c];
+    const mine = cat === 'Мои' ? `<button type="button" class="mk" data-mk="1"><b>✂</b>${T('Вырезать из фото')}</button>` + st.mySt.map(m => `<button type="button" class="my" data-my="${m.id}"><img src="${url({ [m.id]: m.blob }, m.id)}" alt=""><i data-myx="${m.id}" title="${T('Удалить')}">✕</i></button>`).join('') : '';
+    sheet(T('Стикеры'), `<div class="chips cats">${cats.map(c => `<button type="button" data-cat="${c}" class="${c === cat ? 'on' : ''}">${T(c)}</button>`).join('')}<button type="button" data-cat="oc">${T('Мой персонаж')}</button></div><div class="grid-st">${mine}${listOf(cat).map(n => `<button type="button" data-st="${n}" aria-label="${n}">${PV.stickerSvg(n)}</button>`).join('')}</div>`, r => {
       r.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { if (b.dataset.cat === 'oc') { addItem({ type: 'oc', x: 110, y: 640, w: 130, rot: -5 }); closeSheet(); } else sheetStickers(b.dataset.cat); });
+      const mk = r.querySelector('[data-mk]'); if (mk) mk.onclick = () => sheetCutSource();
+      r.querySelectorAll('[data-my]').forEach(b => b.onclick = async e => { const id = b.dataset.my; if (e.target.closest('[data-myx]')) { st.mySt = st.mySt.filter(m => m.id !== id); await DB.put('meta', 'mystickers', st.mySt); return sheetStickers('Мои'); } const m = st.mySt.find(x => x.id === id); if (m) { addCutout(m.blob, m.asp); closeSheet(); } });
       r.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { const n = b.dataset.st; PV.taste.bump(st.profile, 'st:' + n.split(':')[0], .3); addItem({ type: 'sticker', name: n, x: 270 + (Math.random() - .5) * 120, y: 380 + (Math.random() - .5) * 160, w: /^(tape|label)/.test(n) ? 150 : 100, rot: (Math.random() - .5) * 20 }); closeSheet(); });
+    });
+  }
+  // свои стикеры из фото: хранятся в meta/mystickers, на странице — элемент cutout с копией картинки в blobs дня
+  function addCutout(blob, asp) { const k = 'c' + U.uid(); st.cur.blobs[k] = blob; addItem({ type: 'cutout', key: k, asp, x: 270 + (Math.random() - .5) * 120, y: 380 + (Math.random() - .5) * 140, w: 190, rot: (Math.random() - .5) * 14 }); }
+  async function saveCutout(blob, asp) {
+    st.mySt.unshift({ id: 'm' + U.uid(), blob, asp, created: Date.now() }); await DB.put('meta', 'mystickers', st.mySt);
+    if (st.cur && !st.ro) { if (st.mode !== 'edit') setMode('edit'); addCutout(blob, asp); }
+    toast(T('Стикер сохранён в «Мои» — его можно клеить на любые страницы'), 3200);
+  }
+  function sheetCutSource() {
+    const own = st.cur ? st.cur.items.filter(i => i.type === 'photo' && st.cur.blobs[i.key]) : [];
+    const all = []; st.days.forEach(d => (d.items || []).forEach(i => { if (i.type === 'photo' && d.blobs && d.blobs[i.key] && (!st.cur || d.id !== st.cur.id)) all.push({ d, i }); }));
+    sheet(T('Из какого фото вырезать?'), `<label class="btn pink big">${T('Выбрать фото с устройства')}<input type="file" id="cu-dev" accept="image/*" hidden></label>
+      ${own.length ? `<h3>${T('Фото этого дня')}</h3><div class="pick">${own.map((i, k) => `<button type="button" data-o="${k}"><img src="${url(st.cur.blobs, i.key)}" alt=""></button>`).join('')}</div>` : ''}
+      ${all.length ? `<h3>${T('Из моих дней')}</h3><div class="pick">${all.slice(0, 40).map((x, k) => `<button type="button" data-a="${k}"><img src="${url(x.d.blobs, x.i.key)}" alt=""></button>`).join('')}</div>` : ''}`, r => {
+      r.querySelector('#cu-dev').onchange = e => { const f = e.target.files[0]; if (!f) return; closeSheet(); PV.cutout.open(f, saveCutout); };
+      r.querySelectorAll('[data-o]').forEach(b => b.onclick = () => { closeSheet(); PV.cutout.open(st.cur.blobs[own[+b.dataset.o].key], saveCutout); });
+      r.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { const x = all[+b.dataset.a]; closeSheet(); PV.cutout.open(x.d.blobs[x.i.key], saveCutout); });
     });
   }
   function sheetPhoto() {
@@ -595,7 +618,7 @@
   async function loadAssets(d, items) {
     const A = new Map();
     await Promise.all(items.map(async it => {
-      if (it.type === 'photo' || it.type === 'video') A.set(it.id, await loadImg(url(d.blobs, it.type === 'video' ? it.poster : it.key)));
+      if (it.type === 'photo' || it.type === 'video' || it.type === 'cutout') A.set(it.id, await loadImg(url(d.blobs, it.type === 'video' ? it.poster : it.key)));
       else if (['sticker', 'oc', 'secret'].includes(it.type)) { const svg = it.type === 'oc' ? PV.ocSvg(it.ocOf || st.profile && st.profile.oc) : it.type === 'secret' ? PV.stickerSvg(it.kind === 'gift' ? 'gift' : 'envelope', it.color) : PV.stickerSvg(it.name, it.color); A.set(it.id, await loadImg(svgUrl(svg))); }
     }));
     return A;
@@ -608,7 +631,7 @@
       if (fr === 'polaroid' || fr === 'tape') { const pad = w * .06, bot = fr === 'polaroid' ? w * .22 : pad; x.shadowColor = '#0003'; x.shadowBlur = 14; x.fillStyle = '#fff'; x.fillRect(-w / 2 - pad, -ih / 2 - pad, w + 2 * pad, ih + pad + bot); x.shadowBlur = 0; x.drawImage(im, -w / 2, -ih / 2, w, ih); if (fr === 'tape') { x.fillStyle = '#d6b98ce6'; x.fillRect(-w / 2 - pad, -ih / 2 - pad * 2, w * .34, pad * 2); x.fillStyle = '#ffffffaa'; x.fillRect(w / 2 - w * .3, -ih / 2 - pad * 2, w * .34, pad * 2); } }
       else if (fr === 'film') { const pad = w * .05; x.fillStyle = '#121212'; x.fillRect(-w / 2 - pad, -ih / 2 - pad * 2.2, w + pad * 2, ih + pad * 4.4); x.fillStyle = '#fff'; for (let k = 0; k < 9; k++) { x.fillRect(-w / 2 + k * w / 9 + 4, -ih / 2 - pad * 1.7, w / 22, pad * .9); x.fillRect(-w / 2 + k * w / 9 + 4, ih / 2 + pad * .8, w / 22, pad * .9); } x.drawImage(im, -w / 2, -ih / 2, w, ih); }
       else { x.save(); x.beginPath(); if (fr === 'circle') x.arc(0, 0, w / 2, 0, 7); else if (fr === 'round') x.roundRect(-w / 2, -ih / 2, w, ih, 18); else if (fr === 'heart') { const s2 = w / 100, hh = w * .92; x.translate(-w / 2, -hh / 2); x.moveTo(50 * s2, 90 * s2); x.bezierCurveTo(-10 * s2, 50 * s2, 10 * s2, -10 * s2, 50 * s2, 21 * s2); x.bezierCurveTo(90 * s2, -10 * s2, 110 * s2, 50 * s2, 50 * s2, 90 * s2); x.translate(w / 2, hh / 2); } else x.rect(-w / 2, -ih / 2, w, ih); x.clip(); const dh = fr === 'circle' ? w : fr === 'heart' ? w * .92 : ih; const k = Math.max(w / im.width, dh / im.height); x.drawImage(im, -im.width * k / 2, -im.height * k / 2, im.width * k, im.height * k); x.restore(); if (fr === 'stroke') { x.lineWidth = 8; x.strokeStyle = it.sc || '#fff'; x.strokeRect(-w / 2, -ih / 2, w, ih); } }
-    } else if (['sticker', 'oc', 'secret'].includes(it.type)) {
+    } else if (['sticker', 'oc', 'secret', 'cutout'].includes(it.type)) {
       if (im) { const hh = w * (im.height / im.width || 1); x.drawImage(im, -w / 2, -hh / 2, w, hh); }
     } else if (it.type === 'text') {
       x.fillStyle = it.color; x.font = `${it.size}px '${it.font}'`; x.textAlign = it.align || 'center'; x.textBaseline = 'middle';
@@ -1243,6 +1266,7 @@
       if (a === 'del') return removeItem(it.id);
       if (a === 'dup') return addItem(Object.assign(JSON.parse(JSON.stringify(it)), { id: U.uid(), x: it.x + 24, y: it.y + 24, z: maxZ() + 1 }));
       if (a === 'up' || a === 'down') { const sorted = st.cur.items.filter(i => i.page === it.page).sort((x, y) => (x.z || 0) - (y.z || 0)); const i = sorted.indexOf(it), j = a === 'up' ? i + 1 : i - 1; if (sorted[j]) { const t = sorted[j].z || 0; sorted[j].z = it.z || 0; it.z = t === it.z ? t + (a === 'up' ? 1 : -1) : t; } st.dirty = true; renderSpread(); select(it.id); toast(a === 'up' ? T('Поверх соседей') : T('Под соседями'), 1200); return; }
+      if (a === 'cut') return PV.cutout.open(st.cur.blobs[it.key], saveCutout);
       if (a === 'pos') return sheetPos(it);
       if (a === 'frame') return sheetFrame(it);
       if (a === 'color') return sheetColor(it);
@@ -1272,7 +1296,7 @@
     initGestures(); initShelf(); initFan();
     const wrap = $('#ed-wrap'); wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.classList.add('drop'); }); wrap.addEventListener('dragleave', () => wrap.classList.remove('drop')); wrap.addEventListener('drop', async e => { e.preventDefault(); wrap.classList.remove('drop'); if (st.cur && !st.ro) { const fs = [...e.dataTransfer.files]; const vid = fs.find(f => f.type.startsWith('video/')); if (vid) await addVideo(vid); await addPhotos(fs.filter(f => f.type.startsWith('image/'))); } });
     PV.applyI18n();
-    st.profile = await DB.get('meta', 'profile'); st.diary = await DB.get('meta', 'curDiary') || 'main'; st.days = await DB.all('days') || []; st.friends = await DB.all('friends') || [];
+    st.profile = await DB.get('meta', 'profile'); st.diary = await DB.get('meta', 'curDiary') || 'main'; st.days = await DB.all('days') || []; st.friends = await DB.all('friends') || []; st.mySt = (await DB.get('meta', 'mystickers')) || [];
     if (DB.mem) toast(T('Браузер не даёт сохранять — дни проживут до закрытия вкладки'), 5000);
     if (st.profile) applyVibe();
     if (st.profile && !st.profile.vibe) { vibeQuiz(async v => { await saveVibe(v); $('#modal').hidden = true; route(); }, false); }

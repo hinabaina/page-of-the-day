@@ -177,6 +177,18 @@
     'листай развороты · нажми, чтобы открыть': 'swipe through spreads · tap to open', 'Книгой': 'Book view', 'Сеткой': 'Grid view', 'Поиск': 'Search',
     'Сохранить разворот картинкой': 'Save spread as image', 'Дальше': 'Next',
     'твой дневник-книга': 'your journal book', 'Открыть дневник': 'Open the journal', 'Листай страницы, как в настоящей тетради': 'Flip the pages like a real notebook', 'Открыть': 'Open',
+    'Свой стикер из фото': 'Your own sticker from a photo', 'Открываю фото…': 'Opening the photo…', 'Нажми на предмет': 'Tap an object', 'Ластик': 'Eraser', 'Кисть': 'Brush', 'Лассо': 'Lasso',
+    'Нажми на то, что хочешь вырезать: человека, чашку, цветок. AI выделит его сам.': 'Tap what you want to cut out — a person, a cup, a flower. AI will select it.',
+    'Размер кисти': 'Brush size', 'Добавлять к выделенному': 'Add to selection', 'Белая обводка': 'White outline', 'Всё фото': 'Whole photo', 'Сохранить стикер': 'Save sticker',
+    'Проведи по лишнему — оно исчезнет.': 'Brush over what you don’t need — it will disappear.', 'Проведи по тому, что нужно вернуть.': 'Brush over what you want to bring back.',
+    'Обведи предмет пальцем — останется только то, что внутри.': 'Draw around the object — only what’s inside stays.', 'Выделяю…': 'Selecting…',
+    'Загружаю AI для выделения (около 15 МБ, только в первый раз)…': 'Loading the selection AI (about 15 MB, first time only)…',
+    'Не нашла предмет в этом месте — нажми точнее или обведи лассо.': 'Couldn’t find an object there — tap more precisely or use the lasso.',
+    'Готово. Можно поправить ластиком или кистью, или нажать «Сохранить стикер».': 'Done. Touch it up with the eraser or brush, or tap “Save sticker”.',
+    'AI-выделение сейчас недоступно (нужен интернет). Обведи предмет лассо или сотри лишнее ластиком.': 'AI selection isn’t available right now (needs internet). Draw around the object with the lasso or erase the rest.',
+    'Ничего не выделено — нажми на предмет.': 'Nothing selected — tap an object.', 'Вырезать из фото': 'Cut out of a photo',
+    'Стикер сохранён в «Мои» — его можно клеить на любые страницы': 'Sticker saved to “Mine” — use it on any page', 'Из какого фото вырезать?': 'Which photo to cut from?',
+    'Выбрать фото с устройства': 'Choose a photo from device', 'Фото этого дня': 'This day’s photos', '✂ Стикер': '✂ Sticker', 'Мои': 'Mine',
     'Готово, {n} фото': 'Done, {n} photos', 'Без узора': 'Plain', 'Горошек': 'Polka dots', 'Низ': 'Bottoms', 'Большие': 'Big',
     'Браузер не даёт сохранять — дни проживут до закрытия вкладки': 'This browser won’t let me save — your days will last until you close the tab'
   });

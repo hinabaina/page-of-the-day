@@ -574,3 +574,18 @@ body.in-book{overflow:hidden}
 .cover-txt b{font:900 22px/1.1 var(--h)}
 .cover-txt small{color:#8a8296;font-size:14px;margin-bottom:8px}
 .cover-txt .btn svg{width:16px;height:16px}
+
+/* свои стикеры */
+.grid-st .mk{display:grid;place-items:center;align-content:center;gap:4px;background:#fff7fa;border:2px dashed var(--pinkD);color:#8a5470;font:800 11px/1.15 var(--ui);text-align:center}
+.grid-st .mk b{font-size:22px;line-height:1}
+.grid-st .my{position:relative;padding:6px;background:repeating-conic-gradient(#f1ece6 0 25%,#fff 0 50%) 0 0/14px 14px}
+.grid-st .my img{width:100%;height:100%;object-fit:contain;display:block}
+.grid-st .my i{position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:var(--dark);color:#fff;font:700 11px/22px var(--ui);font-style:normal;text-align:center}
+.st.cut img{width:100%;height:auto;display:block;pointer-events:none}
+.cu-tools{margin-top:0}
+.cu-stage{display:grid;place-items:center;background:repeating-conic-gradient(#ece5dc 0 25%,#fbf7f1 0 50%) 0 0/18px 18px;border-radius:16px;padding:10px;touch-action:none}
+.cu-stage canvas{max-width:100%;max-height:52vh;cursor:crosshair;touch-action:none;border-radius:6px}
+.cu-row{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:12px;font:700 13px var(--ui);color:var(--muted)}
+.cu-row input[type=range]{vertical-align:middle;accent-color:var(--pinkD)}
+.cu-chk input{accent-color:var(--pinkD);vertical-align:middle}
+.cu-hint{min-height:2.6em}

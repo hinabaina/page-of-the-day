@@ -331,7 +331,8 @@
     const fk = FONT_K[S.font] || 1, tlen = title.length, tW = text.w;
     let size = Math.round(U.clamp((text.big ? 84 : 66) - tlen * (text.side ? 1.3 : 0.9), text.side ? 26 : 32, text.big ? 84 : 66) * fk);
     if (text.side) size = Math.min(size, 40);
-    const capSrc = S.density > -2 ? (A.G && A.G.caption) || caption(inp, A) : '';
+    let capSrc = S.density > -2 ? (A.G && A.G.caption) || caption(inp, A) : '';
+    if (capSrc && capSrc.replace(/[.!…\s]+$/, '').toLowerCase() === title.toLowerCase()) capSrc = ''; // короткая запись уже стала названием
     let cs = Math.round(U.clamp(30 - capSrc.length * .06, 20, 28) * (S.hand === 'Amatic SC' ? 1.2 : 1));
     await ensureFont(S.font, size); if (capSrc) await ensureFont(S.hand, cs);
     // вид подписи решаем до подгонки: рваный листок выше обычного текста и должен влезть целиком
