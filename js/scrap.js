@@ -270,7 +270,7 @@
       $('[data-it=edit]').hidden = !['text', 'link', 'template', 'secret', 'weather', 'date'].includes(t);
       $('[data-it=frame]').hidden = !['photo', 'video'].includes(t);
       $('[data-it=color]').hidden = ['photo', 'video', 'oc', 'cutout'].includes(t);
-      $('[data-it=cut]').hidden = t !== 'photo';
+      const cb = $('[data-it=cut]'); if (cb) cb.hidden = t !== 'photo'; // кнопки может не быть в закэшированном старом HTML
     }
     if (st.ro) $('#tools').hidden = true;
   }
