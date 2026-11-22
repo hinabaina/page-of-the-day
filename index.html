@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>Страница дня</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="theme-color" content="#0d0c11">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Страница дня">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@500;700&family=Comfortaa:wght@600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=JetBrains+Mono:wght@500&family=Lobster&family=Marck+Script&family=Neucha&family=Nunito:wght@600&family=Onest:wght@400;500;600;700;800&family=Pacifico&family=Rubik+Mono+One&family=Unbounded:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/aura.css">
+</head>
+<body>
+<div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-photo" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol>
+<symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="M16 10l5-3v10l-5-3"/></symbol>
+<symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+<symbol id="i-sticker" viewBox="0 0 24 24"><path d="M14 3H7a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h7l7-7V7a4 4 0 0 0-4-4z"/><path d="M14 21v-4a3 3 0 0 1 3-3h4"/></symbol>
+<symbol id="i-tpl" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+<symbol id="i-date" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></symbol>
+<symbol id="i-secret" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 8l9 6 9-6"/></symbol>
+<symbol id="i-oc" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
+<symbol id="i-bg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 2-1 3-1a4 4 0 0 0 4-4c0-4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/></symbol>
+<symbol id="i-magic" viewBox="0 0 24 24"><path d="M5 19L17 7M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM19 11l.7 1.3L21 13l-1.3.7L19 15l-.7-1.3L17 13l1.3-.7z"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+<symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+<symbol id="i-redo" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.3L3 16M3 21v-5h5"/></symbol>
+<symbol id="i-less" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+<symbol id="i-friends" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.5"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c.8-3.5 3-5 6-5s5.2 1.5 6 5M15 15.5c2.6 0 4.6 1.3 5.5 4"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16l5-5 5 5 3-3 5 5"/></symbol>
+<symbol id="i-zip" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></symbol>
+<symbol id="i-why" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></symbol>
+<symbol id="i-pages" viewBox="0 0 24 24"><rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5"/></symbol>
+</defs></svg>
+
+<header class="bar">
+  <a class="logo" href="#home"><span class="logo-ic"></span><span><b data-i18n>страница дня</b><small data-i18n>дневник атмосферы</small></span></a>
+  <div class="bar-r">
+    <nav class="tabs-top glass">
+      <a href="#home" data-nav="home"><svg><use href="#i-book"/></svg><span data-i18n>Дневник</span></a>
+      <a href="#photos" data-nav="photos"><svg><use href="#i-grid"/></svg><span data-i18n>Галерея</span></a>
+      <a href="#new" class="tab-add" aria-label="Добавить день" data-i18n-aria>+</a>
+      <a href="#friends" data-nav="friends"><svg><use href="#i-friends"/></svg><span data-i18n>Друзья</span></a>
+      <a href="#me" data-nav="me" class="me-link"><span id="me-ava" class="mini-ava"></span><span id="me-name" data-i18n>Я</span></a>
+    </nav>
+    <div class="lang glass" role="group" aria-label="Язык"><button type="button" data-lang="ru">RU</button><button type="button" data-lang="en">EN</button></div>
+  </div>
+</header>
+
+<main>
+  <!-- ДНЕВНИК -->
+  <section id="v-home" class="view">
+    <div class="home-hero">
+      <div>
+        <p class="k" id="hello-k"></p>
+        <h1 id="hello-h">Как прошёл твой день?</h1>
+        <button class="cta glass" id="new-day" type="button"><span class="orb">+</span><span><b data-i18n>Добавить сегодняшний день</b><small data-i18n>Пара фото и пара слов — страницу соберу сама</small></span></button>
+        <div class="week" id="week"></div>
+        <div id="vibe-sum"></div>
+      </div>
+      <div class="side-col">
+        <div class="qday glass" id="qday" hidden></div>
+        <div id="memory" class="mem-col"></div>
+      </div>
+    </div>
+    <div class="sec-row"><h2 class="sec"><span id="diary-name" data-i18n>Мои дни</span> <span id="days-count" class="count"></span></h2><input id="search" type="search" class="search" placeholder="Найти день: «какао», «концерт», «октябрь»…" data-i18n-ph aria-label="Поиск по дням" data-i18n-aria></div>
+    <div class="days" id="days"></div>
+    <div class="row"><label class="btn ghost"><span data-i18n>⇪ Добавить день друга</span><input type="file" id="import-home" accept=".json,application/json" hidden></label></div>
+  </section>
+
+  <!-- ДОБАВИТЬ ДЕНЬ -->
+  <section id="v-new" class="view" hidden>
+    <div class="cmp">
+      <div class="cmp-top"><div><p class="k" id="cmp-date"></p><h1 data-i18n>Каким был день?</h1></div><a class="x" href="#home" aria-label="Закрыть" data-i18n-aria style="display:grid;place-items:center;text-decoration:none">✕</a></div>
+      <textarea id="cmp-text" class="cmp-text glass" placeholder="Пара слов о дне — можно совсем коротко" data-i18n-ph></textarea>
+      <p class="lbl"><span data-i18n>// настроение</span><small data-i18n>необязательно</small></p>
+      <div class="moods" id="cmp-moods"></div>
+      <input id="cmp-own" class="inp own" placeholder="Опиши настроение своими словами" data-i18n-ph hidden>
+      <p class="lbl"><span data-i18n>// фото и видео</span><small data-i18n>первое станет главным</small></p>
+      <div class="media" id="cmp-media"></div>
+      <p class="lbl"><span data-i18n>// детали</span><small data-i18n>необязательно</small></p>
+      <div class="rowi glass"><i>♪</i><input id="cmp-song" placeholder="Песня дня: ссылка или «исполнитель — название»" data-i18n-ph></div>
+      <div class="rowi glass"><i>⌖</i><input id="cmp-place" placeholder="Место" data-i18n-ph></div>
+      <div class="rowi glass"><i>✎</i><input id="cmp-extra" placeholder="Ещё заметка — что хочется не забыть" data-i18n-ph></div>
+      <div class="cmp-q glass" id="cmp-q" hidden></div>
+      <div class="cmp-go"><button class="btn pink" id="cmp-gen" type="button" disabled><span data-i18n>✦ Собрать мой день</span></button></div>
+      <p class="note" id="cmp-hint" style="text-align:center" data-i18n>Добавь хотя бы пару слов или одно фото</p>
+    </div>
+  </section>
+
+  <!-- ГАЛЕРЕЯ -->
+  <section id="v-photos" class="view" hidden>
+    <div class="view-h"><h1 data-i18n>Все фото</h1><p class="sub" data-i18n>Каждый кадр из всех дней в одном месте. Нажми — откроется день, к которому он приклеен.</p></div>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <!-- ДРУЗЬЯ -->
+  <section id="v-friends" class="view" hidden>
+    <div class="view-h">
+      <h1 data-i18n>Дни друзей</h1>
+      <p class="sub" data-i18n>Друг жмёт «Поделиться» в своём дне и присылает тебе файл. Ты добавляешь его сюда, смотришь атмосферу его дня, ставишь реакции и оставляешь записки в конвертиках. Можно собрать общий разворот: слева твоя страница, справа — его.</p>
+      <div class="row"><label class="btn pink big"><span data-i18n>⇪ Добавить файл от друга</span><input type="file" id="import-friends" accept=".json,application/json" hidden></label></div>
+    </div>
+    <div class="days" id="friend-days"></div>
+  </section>
+
+  <!-- ПРОФИЛЬ -->
+  <section id="v-me" class="view" hidden>
+    <div class="me-grid glass">
+      <div class="oc-stage" id="me-oc"></div>
+      <div>
+        <h1 id="me-h">Профиль</h1>
+        <p class="sub" data-i18n>Твой персонаж живёт в дневнике как стикер. Его можно поменять когда угодно.</p>
+        <div class="row"><button class="btn white" id="edit-oc" type="button" data-i18n>Изменить персонажа</button><button class="btn ghost" id="edit-vibe" type="button" data-i18n>Пройти тест вайба заново</button><a class="btn ghost" href="atmosphere.html" data-i18n>Художественный режим</a></div>
+        <div class="row"><button class="btn ghost" id="backup" type="button" data-i18n>Сохранить весь дневник файлом</button><label class="btn ghost"><span data-i18n>Восстановить из файла</span><input type="file" id="restore" accept=".json" hidden></label></div>
+        <div class="set">
+          <h3 data-i18n>AI-анализ через Gemini</h3>
+          <p class="note" data-i18n>Без ключа страницы собирает встроенный движок прямо в браузере. С ключом Gemini дополнительно смотрит, что на фото, и точнее подбирает детали и название. Фото и текст дня тогда отправляются в Google.</p>
+          <div class="field"><span data-i18n>Ключ Gemini API</span><input id="ai-key" type="password" autocomplete="off" placeholder="AIza…"></div>
+          <div class="field"><span data-i18n>Модель</span><input id="ai-model" placeholder="gemini-2.5-flash"></div>
+          <div class="row" style="margin-top:4px"><button class="btn white small" id="ai-save" type="button" data-i18n>Сохранить</button><button class="btn ghost small" id="ai-test" type="button" data-i18n>Проверить</button><span class="note" id="ai-st"></span></div>
+        </div>
+        <p class="note" style="margin-top:18px" data-i18n>Всё хранится только в твоём браузере.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ГОТОВАЯ СТРАНИЦА И РЕДАКТОР -->
+  <section id="v-edit" class="view" hidden>
+    <div class="ed-top">
+      <a class="btn icon" href="#home" aria-label="Назад" data-i18n-aria><svg><use href="#i-back"/></svg></a>
+      <input id="ed-title" class="ed-title" placeholder="Название дня" data-i18n-ph aria-label="Название дня" data-i18n-aria>
+      <input id="ed-date" type="date" class="ed-date" aria-label="Дата" data-i18n-aria>
+      <button class="btn icon edit-only" id="ed-undo" type="button" title="Отменить (Ctrl+Z)" aria-label="Отменить" data-i18n-aria><svg><use href="#i-undo"/></svg></button>
+      <button class="btn small white edit-only" id="ed-done" type="button" data-i18n>Готово</button>
+      <button class="btn icon" id="ed-more" type="button" aria-label="Ещё" data-i18n-aria><svg><use href="#i-dots"/></svg></button>
+    </div>
+    <div class="ed-menu glass" id="ed-menu" hidden>
+      <button type="button" id="ed-play"><svg><use href="#i-play"/></svg><span data-i18n>Прожить день</span></button>
+      <button type="button" id="ed-share"><svg><use href="#i-share"/></svg><span data-i18n>Поделиться</span></button>
+      <button type="button" id="ed-why"><svg><use href="#i-why"/></svg><span data-i18n>Почему так?</span></button>
+      <hr>
+      <button type="button" id="ed-png"><svg><use href="#i-img"/></svg><span data-i18n>Сохранить картинкой</span></button>
+      <button type="button" id="ed-video"><svg><use href="#i-video"/></svg><span data-i18n>Видео для сторис</span></button>
+      <button type="button" id="ed-zip"><svg><use href="#i-zip"/></svg><span data-i18n>Папка .zip</span></button>
+      <hr>
+      <div class="row-m"><svg><use href="#i-pages"/></svg><div class="seg" role="group" aria-label="Страницы"><button type="button" data-pages="1" data-i18n>1 стр.</button><button type="button" data-pages="2" data-i18n>2 стр.</button></div></div>
+    </div>
+    <div class="ed-wrap" id="ed-wrap">
+      <div class="ed-glow"></div>
+      <div class="spread" id="spread"></div>
+    </div>
+    <div class="ed-side" id="ed-side">
+    <p class="side-k k" data-i18n>AI собрал страницу · можно пересобрать</p>
+    <div class="aibar" id="aibar">
+      <button type="button" class="main" data-ai="regen"><svg><use href="#i-redo"/></svg><span data-i18n>Другой вариант</span></button>
+      <button type="button" data-ai="less"><svg><use href="#i-less"/></svg><span data-i18n>Минималистичнее</span></button>
+      <button type="button" data-ai="more"><svg><use href="#i-more"/></svg><span data-i18n>Больше деталей</span></button>
+      <button type="button" data-ai="mood" id="ai-mood"></button>
+    </div>
+    <p class="why-line" id="why-line"></p>
+    <div class="ed-bottom" id="ed-bottom">
+      <button class="btn" type="button" id="ed-edit"><svg><use href="#i-pen"/></svg><span data-i18n>Править</span></button>
+      <button class="btn pink" type="button" id="ed-save" data-i18n>Сохранить в дневник</button>
+    </div>
+    <ol class="why side-why" id="why-list"></ol>
+    </div>
+    <div class="dock" id="dock">
+      <div class="tools" id="tools">
+        <button class="tool" data-sheet="photo" type="button"><svg><use href="#i-photo"/></svg><span data-i18n>Фото</span></button>
+        <label class="tool"><input type="file" id="add-video" accept="video/*" hidden><svg><use href="#i-video"/></svg><span data-i18n>Видео 5с</span></label>
+        <button class="tool" data-act="text" type="button"><svg><use href="#i-text"/></svg><span data-i18n>Текст</span></button>
+        <button class="tool" data-sheet="stickers" type="button"><svg><use href="#i-sticker"/></svg><span data-i18n>Стикеры</span></button>
+        <button class="tool" data-sheet="bg" type="button"><svg><use href="#i-bg"/></svg><span data-i18n>Фон</span></button>
+        <button class="tool" data-sheet="song" type="button"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><span data-i18n>Песня</span></button>
+        <button class="tool" data-sheet="templates" type="button"><svg><use href="#i-tpl"/></svg><span data-i18n>Вопросы</span></button>
+        <button class="tool" data-sheet="widgets" type="button"><svg><use href="#i-date"/></svg><span data-i18n>Дата</span></button>
+        <button class="tool" data-act="link" type="button"><svg><use href="#i-link"/></svg><span data-i18n>Ссылка</span></button>
+        <button class="tool" data-sheet="secrets" type="button"><svg><use href="#i-secret"/></svg><span data-i18n>Секрет</span></button>
+        <button class="tool" data-act="oc" type="button"><svg><use href="#i-oc"/></svg><span data-i18n>Я</span></button>
+      </div>
+      <div class="itbar" id="itbar" hidden>
+        <button type="button" data-it="edit" data-i18n>✎ Изменить</button>
+        <button type="button" data-it="frame" data-i18n>▢ Рамка</button>
+        <button type="button" data-it="color" data-i18n>● Цвет</button>
+        <button type="button" data-it="pos" data-i18n>⌖ Место</button>
+        <button type="button" data-it="up" data-i18n>↑ Выше</button>
+        <button type="button" data-it="down" data-i18n>↓ Ниже</button>
+        <button type="button" data-it="dup" data-i18n>⧉ Копия</button>
+        <button type="button" data-it="del" class="danger" data-i18n>✕ Удалить</button>
+        <button type="button" data-it="done" class="ok" data-i18n>Готово</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- генерация -->
+<div class="genov" id="genov" hidden><div><div class="gorb" id="gorb"></div><b id="gen-h" data-i18n>Считываю атмосферу</b><p id="gen-p" data-i18n>свет фото, слова, ритм песни и твой стиль</p><div class="gsteps" id="gsteps"></div></div></div>
+<!-- нижние листы -->
+<div class="sheet" id="sheet" hidden><div class="sheet-box"><div class="sheet-head"><b id="sheet-title"></b><button type="button" class="x" id="sheet-x" aria-label="Закрыть" data-i18n-aria>✕</button></div><div id="sheet-body" class="sheet-body"></div></div></div>
+<!-- окно (онбординг, конверт, редактирование) -->
+<div class="modal" id="modal" hidden><div class="modal-box" id="modal-box"></div></div>
+<div class="shelf" id="shelf" hidden>
+  <div class="shelf-panel" id="shelf-panel" aria-label="Мои дневники"></div>
+  <button class="shelf-handle" id="shelf-handle" type="button" aria-label="Открыть мои дневники" title="Потяни вправо"><i></i><i></i><i></i></button>
+</div>
+<div class="shelf-dim" id="shelf-dim"></div>
+<div class="replay" id="replay" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="js/util.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/i18n-en.js"></script>
+<script src="js/lexicon.js"></script>
+<script src="js/analyze-text.js"></script>
+<script src="js/analyze-image.js"></script>
+<script src="js/music.js"></script>
+<script src="js/analyze-audio.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/system.js"></script>
+<script src="js/zip.js"></script>
+<script src="js/stickers.js"></script>
+<script src="js/prompts.js"></script>
+<script src="js/taste.js"></script>
+<script src="js/gemini.js"></script>
+<script src="js/generate.js"></script>
+<script src="js/scrap.js"></script>
+</body>
+</html>
