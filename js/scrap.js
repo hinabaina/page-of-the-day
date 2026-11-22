@@ -4,7 +4,7 @@
   const { U } = PV, $ = U.$, $$ = U.$$;
   const PW = 540, PH = 760;
   const T = (s, v) => PV.T(s, v);
-  const FONTS = [['Unbounded', 'Unbounded'], ['Onest', 'Onest'], ['Cormorant Garamond', 'Cormorant'], ['Caveat', 'Caveat'], ['Marck Script', 'Marck'], ['Neucha', 'Neucha'], ['Lobster', 'Lobster'], ['Pacifico', 'Pacifico'], ['Amatic SC', 'Amatic'], ['Comfortaa', 'Comfortaa'], ['Nunito', 'Nunito'], ['Rubik Mono One', 'Rubik'], ['JetBrains Mono', 'Mono']];
+  const FONTS = [['Unbounded', 'Unbounded'], ['Onest', 'Onest'], ['Cormorant Garamond', 'Cormorant'], ['Caveat', 'Caveat'], ['Bad Script', 'Bad Script'], ['Marck Script', 'Marck'], ['Neucha', 'Neucha'], ['Lobster', 'Lobster'], ['Pacifico', 'Pacifico'], ['Amatic SC', 'Amatic'], ['Comfortaa', 'Comfortaa'], ['Nunito', 'Nunito'], ['Rubik Mono One', 'Rubik'], ['JetBrains Mono', 'Mono']];
   const COLORS = ['#3b2340', '#ffffff', '#ff5c93', '#ff3d6e', '#ff9a4a', '#ffd84d', '#8fd18a', '#4fc3a1', '#7fc4ff', '#5b7cff', '#b79cff', '#c06bff', '#8a6a5a', '#2e2228'];
   const PAPERS = [['pink', 'Розовая'], ['black', 'Чёрная'], ['board', 'Зелёная'], ['rainbow', 'Радужная'], ['grid', 'В клетку'], ['crumpled', 'Мятая'], ['wide', 'Широкая линия'], ['narrow', 'Узкая линия']];
   const TEMPLATES = {
@@ -44,6 +44,7 @@
       case 'grid': return `linear-gradient(${c2}66 1px,transparent 1px) 0 0/26px 26px,linear-gradient(90deg,${c2}66 1px,transparent 1px) 0 0/26px 26px,${c1}`;
       case 'dots': return `radial-gradient(${c2} 3px,transparent 3.5px) 0 0/30px 30px,radial-gradient(${c2}88 3px,transparent 3.5px) 15px 15px/30px 30px,${c1}`;
       case 'lined': return `linear-gradient(90deg,transparent 58px,#ff8fab 58px 60px,transparent 60px),repeating-linear-gradient(transparent 0 31px,${c2}99 31px 32px),${c1}`;
+      case 'stripes': return `repeating-linear-gradient(90deg,${c2}cc 0 22px,${c1} 22px 44px)`;
       case 'gingham': return `repeating-linear-gradient(0deg,${c2}55 0 22px,transparent 22px 44px),repeating-linear-gradient(90deg,${c2}55 0 22px,transparent 22px 44px),${c1}`;
       case 'gradient': return `radial-gradient(80% 60% at 20% 10%,#ffffffaa,transparent 60%),linear-gradient(165deg,${c1},${c2})`;
       case 'rainbow': return `radial-gradient(70% 50% at 50% 0%,#ffffffcc,transparent 70%),linear-gradient(170deg,#ffd1e3,#ffe7c7 25%,#fff7c2 45%,#d6f5d6 62%,#d3e9ff 80%,#e6dbff)`;
@@ -58,7 +59,7 @@
       default: return `radial-gradient(70% 50% at 30% 10%,#ffffff90,transparent 70%),${c1}`;
     }
   }
-  const BG_TYPES = [['mesh', 'Mesh из фото'], ['grain', 'Зерно'], ['dotgrid', 'Точки'], ['grid', 'Тетрадь'], ['lined', 'Линейка'], ['kraft', 'Крафт'], ['paper', 'Бумага'], ['gradient', 'Градиент'], ['holo', 'Голограмма'], ['gingham', 'Клетка'], ['dots', 'Горошек'], ['hearts', 'Сердечки'], ['rainbow', 'Радуга'], ['crumpled', 'Мятая'], ['stars', 'Ночь']];
+  const BG_TYPES = [['stripes', 'Полоски'], ['mesh', 'Mesh из фото'], ['grain', 'Зерно'], ['dotgrid', 'Точки'], ['grid', 'Тетрадь'], ['lined', 'Линейка'], ['kraft', 'Крафт'], ['paper', 'Бумага'], ['gradient', 'Градиент'], ['holo', 'Голограмма'], ['gingham', 'Клетка'], ['dots', 'Горошек'], ['hearts', 'Сердечки'], ['rainbow', 'Радуга'], ['crumpled', 'Мятая'], ['stars', 'Ночь']];
 
   function setAccent(pal) {
     const r = document.documentElement.style;
@@ -208,7 +209,7 @@
       case 'video': return `<div class="ph fr-${it.frame || 'none'}" style="--sc:${it.sc || '#fff'}"><video src="${url(blobs, it.key)}" muted loop autoplay playsinline></video></div>`;
       case 'sticker': return `<div class="st">${PV.stickerSvg(it.name, it.color)}</div>`;
       case 'oc': return PV.ocSvg(prof);
-      case 'text': return `<div class="tx${it.bgs === 'pill' ? ' bg-pill' : ''}" style="font-family:'${it.font}';font-size:${it.size}px;color:${it.color};text-align:${it.align || 'center'};${it.bgs === 'pill' ? 'background:#fff;' : it.bgs === 'mark' ? `background:linear-gradient(transparent 55%,${it.mark || '#ffd1e3'} 55%);` : ''}">${U.esc(it.text)}</div>`;
+      case 'text': return `<div class="tx${it.bgs === 'pill' ? ' bg-pill' : it.bgs === 'torn' ? ' bg-torn' : ''}" style="font-family:'${it.font}';font-size:${it.size}px;color:${it.color};text-align:${it.align || 'center'};${it.bgs === 'pill' ? 'background:#fff;' : it.bgs === 'torn' ? '' : it.bgs === 'mark' ? `background:linear-gradient(transparent 55%,${it.mark || '#ffd1e3'} 55%);` : ''}">${U.esc(it.text)}</div>`;
       case 'date': return `<div class="wd wd-${it.style}" style="color:${it.color};font-size:${Math.round(it.w / (it.style === 'mini' ? 15 : it.style === 'big' ? 12 : 9))}px">${fmtDateWidget(it, day)}</div>`;
       case 'weather': return `<div class="wd wd-${it.style || 'pill'}" style="color:${it.color};font-size:${Math.round(it.w / 8)}px">${seasonIc[it.season] || '☁'} ${T(SEASON_RU[it.season] || '')} · ${it.temp > 0 ? '+' : ''}${it.temp}°</div>`;
       case 'link': return it.url ? `<a class="lk" href="${U.esc(it.url)}" target="_blank" rel="noopener" style="font-size:${Math.round(it.w / 20)}px"><i style="background:${linkColor(it.url)}">${it.song || /youtu|spotify|yandex|soundcloud|music/.test(it.url) ? '♪' : '↗'}</i>${U.esc(it.title || it.url)}</a>` : `<span class="lk" style="font-size:${Math.round(it.w / 20)}px"><i style="background:#ff3d6e">♪</i>${U.esc(it.title || T('песня дня'))}</span>`;
@@ -582,6 +583,7 @@
     if (type === 'grid') { x.lineWidth = 1; for (let i = 0; i < w; i += 26) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, h); x.stroke(); } for (let j = 0; j < h; j += 26) { x.beginPath(); x.moveTo(0, j); x.lineTo(w, j); x.stroke(); } }
     if (type === 'lined') { for (let j = 32; j < h; j += 32) x.fillRect(0, j, w, 1); x.fillStyle = '#ff8fab'; x.fillRect(58, 0, 2, h); }
     if (type === 'dots') for (let j = 0; j < h; j += 30) for (let i = 0; i < w; i += 30) { x.beginPath(); x.arc(i + (j / 30 % 2) * 15, j, 3, 0, 7); x.fill(); }
+    if (type === 'stripes') { x.globalAlpha = .8; for (let i = 0; i < w; i += 44) x.fillRect(i, 0, 22, h); }
     if (type === 'gingham') { x.globalAlpha = .3; for (let i = 0; i < w; i += 44) x.fillRect(i, 0, 22, h); for (let j = 0; j < h; j += 44) x.fillRect(0, j, w, 22); }
     if (type === 'hearts' || type === 'stars') { x.globalAlpha = .6; x.font = '22px sans-serif'; for (let j = 20; j < h; j += 60) for (let i = 10; i < w; i += 60) x.fillText(type === 'hearts' ? '♥' : '✦', i + (j % 120 ? 30 : 0), j); }
     if (type === 'mesh') { x.globalAlpha = 1; [[.15, .15, bg.c3 || c2], [.85, .3, bg.c4 || c2], [.5, 1, c2]].forEach(([px, py, c]) => { const g = x.createRadialGradient(px * w, py * h, 0, px * w, py * h, w * .75); g.addColorStop(0, c); g.addColorStop(1, c + '00'); x.fillStyle = g; x.fillRect(0, 0, w, h); }); }
@@ -612,22 +614,29 @@
       x.fillStyle = it.color; x.font = `${it.size}px '${it.font}'`; x.textAlign = it.align || 'center'; x.textBaseline = 'middle';
       const lines = wrap(x, it.text, w - 16); const lh = it.size * 1.15, ax = it.align === 'left' ? -w / 2 + 8 : it.align === 'right' ? w / 2 - 8 : 0;
       if (it.bgs === 'pill') { x.save(); x.fillStyle = '#fff'; x.beginPath(); x.roundRect(-w / 2, -lines.length * lh / 2 - 6, w, lines.length * lh + 12, 16); x.fill(); x.restore(); }
+      if (it.bgs === 'torn') { const th = lines.length * lh + 30, t0 = -th / 2; x.save(); x.shadowColor = '#0002'; x.shadowBlur = 10; x.shadowOffsetY = 3; x.fillStyle = '#fbf6ec'; x.beginPath(); x.moveTo(-w / 2, t0); x.lineTo(w / 2, t0); x.lineTo(w / 2, t0 + th - 6); for (let k = w / 2; k > -w / 2; k -= 12) x.lineTo(k - 6, t0 + th - (k / 12 % 2 ? 0 : 7)); x.lineTo(-w / 2, t0 + th - 6); x.closePath(); x.fill(); x.restore(); }
       lines.forEach((l, i) => x.fillText(l, ax, (i - (lines.length - 1) / 2) * lh));
     } else {
       const label = it.type === 'date' ? fmtDateWidget(it, d).replace(/<br>/g, ' · ').replace(/<[^>]+>/g, ' ') : it.type === 'weather' ? `${SEASON_RU[it.season] || ''} · ${it.temp > 0 ? '+' : ''}${it.temp}°` : it.type === 'link' ? '♪ ' + (it.title || '') : TEMPLATES[it.tpl] ? TEMPLATES[it.tpl][0] : '';
-      const fs = it.type === 'template' ? w / 14 : w / 11; x.font = `600 ${fs}px Onest, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
-      const tw = Math.min(w, x.measureText(label).width + 30), hh = it.type === 'template' ? w * .9 : fs * 2.1;
-      x.fillStyle = it.type === 'template' ? it.color || '#fff' : '#ffffffe6'; x.beginPath(); x.roundRect(-tw / 2, -hh / 2, tw, hh, 16); x.fill();
-      x.fillStyle = it.type === 'link' ? '#121212' : it.color && it.type !== 'template' ? it.color : '#121212'; x.fillText(label, 0, it.type === 'template' ? -hh / 2 + fs * 1.2 : 0);
+      // размеры как у DOM-виджетов (.wd, .lk): шрифт от ширины элемента, плашка по ширине текста
+      const fs = it.type === 'template' ? w / 14 : it.type === 'link' ? w / 20 : it.type === 'weather' ? w / 8 : it.style === 'mini' ? w / 15 : it.style === 'big' ? w / 12 : w / 9;
+      x.font = `600 ${fs}px Onest, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      const plain = it.type === 'date' && (it.style === 'mini' || it.style === 'stamp' || it.style === 'big');
+      const lbl = it.type === 'link' ? label.replace(/^♪ /, '') : label, mw = x.measureText(lbl).width;
+      const tw = it.type === 'template' ? w : it.type === 'link' ? Math.min(w, mw + fs * 4.2) : mw + fs * 2.2, hh = it.type === 'template' ? w * .9 : it.type === 'link' ? fs * 3.1 : fs * 2.3;
+      if (!plain) { x.fillStyle = it.type === 'template' ? it.color || '#fff' : '#ffffffe8'; x.beginPath(); x.roundRect(-tw / 2, -hh / 2, tw, hh, hh / 2); x.fill(); }
+      if (it.type === 'link') { x.fillStyle = it.color || '#ff3d6e'; x.beginPath(); x.arc(-tw / 2 + hh / 2, 0, hh / 2 - 4, 0, 7); x.fill(); x.fillStyle = '#fff'; x.fillText('♪', -tw / 2 + hh / 2, 0); x.save(); x.beginPath(); x.rect(-tw / 2 + hh, -hh / 2, tw - hh - 8, hh); x.clip(); x.fillStyle = '#121212'; x.textAlign = 'left'; x.fillText(lbl, -tw / 2 + hh + 4, 0); x.restore(); return; }
+      x.fillStyle = it.color && it.type !== 'template' ? it.color : '#121212'; x.fillText(label, 0, it.type === 'template' ? -hh / 2 + fs * 1.2 : 0);
     }
   }
-  async function drawDay(d, scale = .5, firstOnly = false) {
-    const pages = firstOnly ? 1 : d.pages || 1, c = U.canvas(PW * pages * scale, PH * scale), x = c.getContext('2d');
+  async function drawDay(d, scale = .5, firstOnly = false, onlyPage = null) {
+    const one = onlyPage != null, pages = firstOnly || one ? 1 : d.pages || 1, c = U.canvas(PW * pages * scale, PH * scale), x = c.getContext('2d');
     x.scale(scale, scale);
     try { await Promise.race([document.fonts.ready, U.sleep(800)]); } catch (e) { }
-    const A = await loadAssets(d, d.items.filter(i => (i.page || 0) < pages));
-    for (let p = 0; p < pages; p++) {
-      x.save(); x.translate(p * PW, 0); x.beginPath(); x.rect(0, 0, PW, PH); x.clip();
+    const P0 = one ? onlyPage : 0;
+    const A = await loadAssets(d, d.items.filter(i => (i.page || 0) >= P0 && (i.page || 0) < P0 + pages));
+    for (let p = P0; p < P0 + pages; p++) {
+      x.save(); x.translate((p - P0) * PW, 0); x.beginPath(); x.rect(0, 0, PW, PH); x.clip();
       drawBg(x, p === 1 && d.bg2 ? d.bg2 : d.bg, PW, PH);
       d.items.filter(i => (i.page || 0) === p).sort((a, b) => (a.z || 0) - (b.z || 0)).forEach(it => { x.save(); x.translate(it.x, it.y); x.rotate((it.rot || 0) * Math.PI / 180); drawItem(x, it, d, A); x.restore(); });
       x.restore();
@@ -740,6 +749,7 @@
     $('#new2').onclick = startNew;
     $('#memory').innerHTML = memoryCard(); const mc = $('#memory .memory'); if (mc) mc.onclick = e => { e.preventDefault(); const d = st.days.find(x => x.id === mc.dataset.replay); if (d) replay(d); };
     const last = days.find(d => d.palette); setAccent(last && last.palette);
+    setHomeView(st.homeView || 'book');
   }
   // вопрос дня: не каждый день, без повторов подряд, можно пропустить
   function todayPrompt() {
@@ -756,6 +766,140 @@
     $('#q-ans').onclick = () => { draft().prompt = pr; location.hash = 'new'; setTimeout(() => { const a = $('#cmp-ans'); if (a) a.focus(); }, 80); };
     $('#q-skip').onclick = async () => { pr.log.skip = true; await DB.put('meta', 'profile', st.profile); renderQday(); };
   }
+
+
+  /* ---------- дневник как книга: веер разворотов на главной и листание ---------- */
+  const pageCache = new Map();
+  // картинка одной страницы дня; первая страница в маленьком размере уже есть в d.thumb
+  function pageImg(d, p, scale) {
+    if (p === 0 && scale <= .5 && d.thumb) return Promise.resolve(d.thumb);
+    const k = `${d.id}:${d.updated || d.created}:${p}:${scale}`;
+    if (!pageCache.has(k)) pageCache.set(k, drawDay(Object.assign({}, d, { blobs: d.blobs || {} }), scale, false, p));
+    return pageCache.get(k);
+  }
+  function bookPages() {
+    const did = curDiary().id;
+    const days = st.days.filter(d => (d.diaryId || 'main') === did && d.items && d.items.length).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+    return days.flatMap(d => Array.from({ length: d.pages || 1 }, (_, p) => ({ d, p })));
+  }
+  function bookSpreads() { const pg = bookPages(), out = []; for (let i = 0; i < pg.length; i += 2) out.push([pg[i], pg[i + 1] || null]); return out; }
+  const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 10 || b >= 20) ? few : many; };
+  const pagesLabel = n => PV.lang === 'en' ? `${n} ${n === 1 ? 'page' : 'pages'}` : `${n} ${plural(n, 'страница', 'страницы', 'страниц')}`;
+  function setHomeView(v) {
+    st.homeView = v; try { localStorage.setItem('pv-home-view', v); } catch (e) { }
+    $('#home-book').hidden = v !== 'book'; $('#home-grid').hidden = v === 'book';
+    $('#view-book').classList.toggle('on', v === 'book'); $('#view-grid').classList.toggle('on', v !== 'book');
+    if (v === 'book') renderFan();
+  }
+  function blankPage(cls = '') { return `<div class="leaf blank ${cls}"><button type="button" class="leaf-add" data-add="1"><b>+</b>${T('Добавить сегодняшний день')}</button></div>`; }
+  function leafHtml(x, side) {
+    if (!x) return blankPage(side);
+    return `<div class="leaf ${side}" data-day="${x.d.id}" data-p="${x.p}"><img alt="" data-src="${x.d.id}:${x.p}"></div>`;
+  }
+  function fillImgs(root, scale) {
+    root.querySelectorAll('img[data-src]').forEach(im => { const [id, p] = im.dataset.src.split(':'); const d = st.days.find(x => x.id === id); if (!d) return; im.removeAttribute('data-src'); pageImg(d, +p, scale).then(u => { im.src = u; }); });
+  }
+  function renderFan() {
+    const sp = bookSpreads(), fan = $('#fan'), name = capName(st.profile.name);
+    $('#j-title').textContent = diaries().length > 1 ? curDiary().name : T('дневник {n}', { n: name });
+    $('#j-pages').textContent = pagesLabel(bookPages().length);
+    if (!sp.length) { fan.innerHTML = `<div class="sp front empty">${blankPage('left')}${blankPage('right')}</div>`; return; }
+    if (st.fanI == null || st.fanI >= sp.length) st.fanI = sp.length - 1;
+    fan.innerHTML = sp.map((s, i) => `<div class="sp" data-i="${i}">${leafHtml(s[0], 'left')}${leafHtml(s[1], 'right')}</div>`).join('');
+    layoutFan(); fillImgs(fan, .45);
+  }
+  function layoutFan() {
+    $$('#fan .sp').forEach(el => {
+      const k = +el.dataset.i - st.fanI;
+      el.classList.toggle('front', k === 0);
+      el.style.zIndex = 100 + k;
+      el.style.opacity = k > 0 || k < -6 ? 0 : 1;
+      el.style.pointerEvents = k > 0 || k < -6 ? 'none' : '';
+      el.style.transform = k === 0 ? 'translateX(0) rotateY(8deg)' : k > 0 ? 'translateX(30%) rotateY(-10deg) scale(.9)' : `translateX(calc(${k * 5.2}% - 6%)) translateZ(${k * 60}px) rotateY(28deg) scale(${1 + k * .03})`;
+    });
+  }
+  function fanGo(i) { const n = $$('#fan .sp').length; if (!n) return; st.fanI = U.clamp(i, 0, n - 1); layoutFan(); }
+  function initFan() {
+    const fan = $('#fan'); let x0 = null, moved = false;
+    fan.addEventListener('pointerdown', e => { x0 = e.clientX; moved = false; });
+    fan.addEventListener('pointermove', e => { if (x0 != null && Math.abs(e.clientX - x0) > 8) moved = true; });
+    fan.addEventListener('pointerup', e => {
+      const dx = x0 == null ? 0 : e.clientX - x0; x0 = null;
+      if (moved && Math.abs(dx) > 40) return fanGo(st.fanI + (dx < 0 ? 1 : -1));
+      if (e.target.closest('[data-add]')) return startNew();
+      const sp = e.target.closest('.sp'); if (!sp) return;
+      const i = +sp.dataset.i; if (i !== st.fanI) return fanGo(i);
+      openBook(i * 2 + (e.target.closest('.leaf.right') ? 1 : 0));
+    });
+    fan.addEventListener('wheel', e => { if (Math.abs(e.deltaX) < 25 && Math.abs(e.deltaY) < 25) return; if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) { e.preventDefault(); clearTimeout(fan.wt); fan.wt = setTimeout(() => fanGo(st.fanI + ((e.deltaX || e.deltaY) > 0 ? 1 : -1)), 40); } }, { passive: false });
+    $('#view-book').onclick = () => setHomeView('book'); $('#view-grid').onclick = () => setHomeView('grid');
+    $('#j-search').onclick = () => { setHomeView('grid'); setTimeout(() => $('#search').focus(), 50); };
+    $('#j-add').onclick = startNew;
+    $('#j-share').onclick = async () => { const s = bookSpreads()[st.fanI]; if (!s) return; const ims = await Promise.all(s.map(x => x ? pageImg(x.d, x.p, 1.5) : null)); const c = U.canvas(PW * 1.5 * 2, PH * 1.5), g = c.getContext('2d'); g.fillStyle = '#fbf7f1'; g.fillRect(0, 0, c.width, c.height); for (let k = 0; k < 2; k++) if (ims[k]) { const im = await loadImg(ims[k]); g.drawImage(im, k * PW * 1.5, 0); } U.download(await dataToBlob(c.toDataURL('image/jpeg', .9)), U.safeName((s[0].d.title || 'разворот')) + '.jpg'); toast(T('Разворот сохранён картинкой')); };
+    $('#j-del').onclick = () => { const s = bookSpreads()[st.fanI]; if (!s) return; const ds = [...new Set(s.filter(Boolean).map(x => x.d))]; sheet(T('Удалить день'), `<p class="note">${T('День удалится из этого браузера насовсем. Если нужна копия — сначала сохрани дневник файлом в профиле.')}</p><div class="list">${ds.map(d => `<button type="button" data-del="${d.id}">${U.esc(d.title || T('Мой день'))}<small>${U.fmtDate(d.date)}</small></button>`).join('')}</div>`, r => r.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => { if (b.dataset.sure) { await DB.del('days', b.dataset.del); st.days = await DB.all('days'); closeSheet(); toast(T('День удалён')); route(); } else { b.dataset.sure = 1; b.insertAdjacentHTML('beforeend', `<small style="color:#d4475f">${T('Нажми ещё раз, чтобы удалить')}</small>`); } })); };
+    $('#j-more').onclick = () => { const s = bookSpreads()[st.fanI]; const d = s && (s[1] || s[0]).d; sheet(T('Дневник'), `<div class="list"><button type="button" data-m="open">${T('Открыть как книгу')}</button>${d ? `<button type="button" data-m="replay">${T('Прожить день')}<small>${U.esc(d.title || '')}</small></button>` : ''}<button type="button" data-m="grid">${T('Все дни сеткой')}</button><label class="btn ghost" style="justify-content:flex-start;border-radius:18px;min-height:52px">${T('⇪ Добавить день друга')}<input type="file" id="import-more" accept=".json,application/json" hidden></label></div>`, r => { r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { closeSheet(); const m = b.dataset.m; if (m === 'open') openBook(st.fanI * 2); if (m === 'replay') replay(d); if (m === 'grid') setHomeView('grid'); }); r.querySelector('#import-more').onchange = e => { const f = e.target.files[0]; closeSheet(); if (f) importFile(f); }; }); };
+    // книга
+    $('#bk-x').onclick = closeBook; $('#bk-prev').onclick = () => flip(-1); $('#bk-next').onclick = () => flip(1);
+    let bx = null; const bk = $('#bk');
+    bk.addEventListener('pointerdown', e => { bx = e.clientX; });
+    bk.addEventListener('pointerup', e => { const dx = bx == null ? 0 : e.clientX - bx; bx = null; if (Math.abs(dx) > 40) return flip(dx < 0 ? 1 : -1); if (e.target.closest('[data-add]')) { closeBook(); return startNew(); } const lf = e.target.closest('.leaf[data-day]'); if (lf && !st.bk.busy) { closeBook(); location.hash = 'day-' + lf.dataset.day; } });
+    addEventListener('keydown', e => { if (!$('#book').hidden) { if (e.key === 'ArrowRight') flip(1); if (e.key === 'ArrowLeft') flip(-1); if (e.key === 'Escape') closeBook(); return; } if (!$('#v-home').hidden && st.homeView === 'book' && !e.target.closest('input,textarea')) { if (e.key === 'ArrowRight') fanGo(st.fanI + 1); if (e.key === 'ArrowLeft') fanGo(st.fanI - 1); if (e.key === 'Enter') openBook(st.fanI * 2); } });
+    addEventListener('resize', () => { if (!$('#book').hidden) drawBook(); });
+  }
+  // открытая книга: на широком экране разворот из двух страниц, на узком — одна страница
+  function openBook(pageIdx) {
+    const pages = bookPages(); if (!pages.length) return startNew();
+    st.bk = { pages, busy: false, i: 0 }; $('#book').hidden = false; document.body.classList.add('in-book');
+    st.bk.single = vw() < 760;
+    st.bk.i = st.bk.single ? U.clamp(pageIdx, 0, pages.length - 1) : Math.floor(U.clamp(pageIdx, 0, pages.length - 1) / 2) * 2;
+    drawBook();
+  }
+  function closeBook() { $('#book').hidden = true; document.body.classList.remove('in-book'); if (st.bk && !st.bk.single) { st.fanI = Math.floor(st.bk.i / 2); if (!$('#v-home').hidden) layoutFan(); } }
+  // размеры экрана без учёта контента, вылезающего за край
+  const vw = () => document.documentElement.clientWidth || innerWidth, vh = () => document.documentElement.clientHeight || innerHeight;
+  const bkScale = () => (vw() > 1400 ? 1.3 : 1);
+  function bkLeaf(x, side) { return x ? `<div class="leaf ${side}" data-day="${x.d.id}" data-p="${x.p}"><img alt="" data-src="${x.d.id}:${x.p}"></div>` : `<div class="leaf blank ${side}"><button type="button" class="leaf-add" data-add="1"><b>+</b>${T('Добавить сегодняшний день')}</button></div>`; }
+  function drawBook() {
+    const b = st.bk, bk = $('#bk'), P = b.pages;
+    b.single = vw() < 760;
+    if (!b.single) b.i -= b.i % 2;
+    const h = Math.min(vh() - (b.single ? 190 : 170), (vw() - (b.single ? 40 : 150)) / (b.single ? PW / PH : 2 * PW / PH));
+    bk.style.setProperty('--pw', (h * PW / PH) + 'px'); bk.style.setProperty('--ph', h + 'px');
+    bk.className = 'bk' + (b.single ? ' single' : '');
+    bk.innerHTML = b.single ? `<div class="bk-pages">${bkLeaf(P[b.i], 'right')}</div><div class="bk-edge"></div>`
+      : `<div class="bk-pages">${bkLeaf(P[b.i], 'left')}${bkLeaf(P[b.i + 1], 'right')}</div><div class="bk-spine"></div><div class="bk-edge"></div>`;
+    fillImgs(bk, bkScale());
+    const cur = [P[b.i], b.single ? null : P[b.i + 1]].filter(Boolean);
+    $('#bk-cap').textContent = cur.map(x => `${x.d.title || T('Мой день')} · ${U.fmtDate(x.d.date)}`).join('   ·   ');
+    $('#bk-top').textContent = `${b.single ? b.i + 1 : `${b.i + 1}–${Math.min(b.i + 2, P.length)}`} / ${P.length}`;
+    $('#bk-prev').disabled = b.i <= 0; $('#bk-next').disabled = b.i + (b.single ? 1 : 2) >= P.length;
+    // соседние страницы готовим заранее, чтобы лист переворачивался без пустоты
+    [-2, -1, 2, 3].forEach(k => { const x = P[b.i + k]; if (x) pageImg(x.d, x.p, bkScale()); });
+  }
+  async function flip(dir) {
+    const b = st.bk; if (!b || b.busy) return;
+    const P = b.pages, ni = b.i + dir * (b.single ? 1 : 2);
+    if (ni < 0 || ni >= P.length) return;
+    b.busy = true;
+    const sc = bkScale(), src = x => (x ? pageImg(x.d, x.p, sc) : Promise.resolve(null));
+    // разворот: под листом сразу лежит новая страница, лист несёт старую (лицо) и новую соседнюю (оборот)
+    // одна страница: вперёд — лист уходит влево с открытой следующей под ним; назад — предыдущая возвращается сверху
+    let side, under, front, back, cls;
+    if (!b.single) { side = dir > 0 ? 'right' : 'left'; under = dir > 0 ? P[ni + 1] : P[ni]; front = dir > 0 ? P[b.i + 1] : P[b.i]; back = dir > 0 ? P[ni] : P[ni + 1]; cls = dir > 0 ? 'fwd' : 'back'; }
+    else if (dir > 0) { side = 'right'; under = P[ni]; front = P[b.i]; back = null; cls = 'fwd single'; }
+    else { side = null; front = P[ni]; back = null; cls = 'fwd single in'; }
+    const [uu, fu, bu] = await Promise.all([src(under), src(front), src(back)]);
+    const pagesEl = $('#bk .bk-pages');
+    if (side) { const el = pagesEl.querySelector('.leaf.' + side); if (el) el.outerHTML = under ? `<div class="leaf ${side}"><img alt="" src="${uu}"></div>` : `<div class="leaf blank ${side}"></div>`; }
+    const face = (u, c) => `<div class="face ${c}">${u ? `<img alt="" src="${u}">` : ''}<i class="shade"></i></div>`;
+    const leaf = document.createElement('div'); leaf.className = 'turn ' + cls; leaf.innerHTML = face(fu, 'f') + face(bu, 'b');
+    pagesEl.appendChild(leaf);
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    leaf.classList.add('go');
+    await new Promise(r => { leaf.addEventListener('transitionend', r, { once: true }); setTimeout(r, 950); });
+    b.i = ni; b.busy = false; drawBook();
+  }
+
 
   /* ---------- «Добавить сегодняшний день»: материалы дня → генерация ---------- */
   const draft = () => st.draft || (st.draft = { text: '', mood: '', moodText: '', media: [], song: '', place: '', extra: '', prompt: undefined, answer: '' });
@@ -1019,10 +1163,10 @@
         <div class="oc-ed"><div class="oc-stage">${PV.ocSvg(oc)}</div><div>
           <h3>${T('Кто это')}</h3>${opts(PV.OC_KINDS, 'kind')}
           ${human() ? `<h3>${T('Кожа')}</h3>${cols(PV.OC_SKIN, 'skin')}<h3>${T('Причёска')}</h3>${opts(PV.OC_HAIRSTYLE, 'style')}<h3>${T('Цвет волос')}</h3>${cols(PV.OC_HAIR, 'hair')}` : `<h3>${T('Шёрстка')}</h3>${cols(PV.OC_FUR, 'fur')}`}
-          <h3>${T('Глазки')}</h3>${opts(PV.OC_EYES, 'eyes')}<h3>${T('Аксессуар')}</h3>${opts(PV.OC_ACC, 'acc')}<h3>${T('Одежда')}</h3>${cols(['#2f3a4f', '#e8e2d6', '#c4563f', '#6c7a5b', '#7a8fd1', '#d9a441', '#121212', '#b88aa0'], 'outfit')}
+          <h3>${T('Глазки')}</h3>${opts(PV.OC_EYES, 'eyes')}<h3>${T('Аксессуар')}</h3>${opts(PV.OC_ACC, 'acc')}<h3>${T('Одежда')}</h3>${cols(['#2f3a4f', '#e8e2d6', '#f6c9d4', '#5b5a2e', '#1f2a2a', '#c4563f', '#6c7a5b', '#8b7fd1', '#a8c8e0', '#b88aa0'], 'outfit')}${opts([['0', 'Без узора'], ['1', 'Горошек']], 'dots')}<h3>${T('Низ')}</h3>${cols(PV.OC_BOTTOMS || [], 'bottom')}
           <div class="row"><label class="btn ghost">📷 ${T('Создать по моему фото')}<input type="file" accept="image/*" id="oc-photo" hidden></label><button class="btn pink" id="oc-ok" type="button">${first ? T('Готово, в дневник!') : T('Сохранить')}</button></div>
           <p class="note">${T('По фото я подберу цвет кожи и волос. Фото никуда не отправляется.')}</p></div></div>`;
-      ['kind', 'style', 'eyes', 'acc', 'skin', 'hair', 'fur', 'outfit'].forEach(k => $$(`[data-${k}]`, box).forEach(b => b.onclick = () => { oc[k] = b.dataset[k]; draw(); }));
+      ['kind', 'style', 'eyes', 'acc', 'skin', 'hair', 'fur', 'outfit', 'bottom', 'dots'].forEach(k => $$(`[data-${k}]`, box).forEach(b => b.onclick = () => { oc[k] = b.dataset[k]; draw(); }));
       $('#oc-photo', box).onchange = async e => { const f = e.target.files[0]; if (!f) return; const im = await U.blobToImage(f); const c = U.canvas(60, 80), x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0, 60, 80); const avg = (sx, sy, w, h) => { const d = x.getImageData(sx, sy, w, h).data; let r = 0, g = 0, b = 0, n = 0; for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; } return [r / n, g / n, b / n]; }; const near = (rgb, arr) => arr.slice().sort((a, b) => dist(hexRgb(a), rgb) - dist(hexRgb(b), rgb))[0]; const dist = (a, b) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2; oc.kind = oc.kind === 'boy' ? 'boy' : 'girl'; oc.skin = near(avg(22, 30, 16, 16), PV.OC_SKIN); oc.hair = near(avg(18, 4, 24, 10), PV.OC_HAIR); URL.revokeObjectURL(im.src); draw(); toast(T('Подобрала цвета по фото — допиши детали')); };
       $('#oc-ok', box).onclick = () => onDone(oc);
     };
@@ -1125,7 +1269,8 @@
     $('#backup').onclick = backup; $('#restore').onchange = e => { const f = e.target.files[0]; if (f) importFile(f); };
     addEventListener('resize', fit); addEventListener('hashchange', route);
     addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && st.cur && !e.target.closest('input,textarea,[contenteditable=true]')) { e.preventDefault(); undo(); return; } if ((e.key === 'Delete' || e.key === 'Backspace') && st.sel && !e.target.closest('input,textarea,[contenteditable=true]')) removeItem(st.sel); });
-    initGestures(); initShelf();
+    initGestures(); initShelf(); initFan();
+    try { st.homeView = localStorage.getItem('pv-home-view') || 'book'; } catch (e) { st.homeView = 'book'; }
     const wrap = $('#ed-wrap'); wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.classList.add('drop'); }); wrap.addEventListener('dragleave', () => wrap.classList.remove('drop')); wrap.addEventListener('drop', async e => { e.preventDefault(); wrap.classList.remove('drop'); if (st.cur && !st.ro) { const fs = [...e.dataTransfer.files]; const vid = fs.find(f => f.type.startsWith('video/')); if (vid) await addVideo(vid); await addPhotos(fs.filter(f => f.type.startsWith('image/'))); } });
     PV.applyI18n(); aiCfg = (await DB.get('meta', 'ai')) || {};
     st.profile = await DB.get('meta', 'profile'); st.diary = await DB.get('meta', 'curDiary') || 'main'; st.days = await DB.all('days') || []; st.friends = await DB.all('friends') || [];

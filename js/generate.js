@@ -9,44 +9,44 @@
   /* ---------- настроения: диапазоны, а не шаблоны ---------- */
   const MOODS = {
     calm: { e: .25, sat: [.18, .42], tilt: 3, nSt: [1, 3], stSize: [54, 78],
-      bgs: { grain: 3, paper: 2, dotgrid: 2, mesh: 2, lined: 1 },
-      fonts: { 'Cormorant Garamond': 3, Neucha: 2, Comfortaa: 1.5, Onest: 1, Caveat: 1 },
+      bgs: { paper: 3, grain: 2, lined: 2, dotgrid: 1.5, mesh: 1, stripes: 1 },
+      fonts: { 'Cormorant Garamond': 3, 'Bad Script': 2, Neucha: 1.5, Caveat: 1.5, Comfortaa: 1 },
       frames: { round: 3, polaroid: 1.5, stroke: 1, none: 1 },
       grammars: { hero: 3, grid: 2.5, split: 2, strip: 1 },
       st: ['star-line', 'sparkle', 'asterisk', 'leaf', 'cloud', 'heart-line', 'arrow'], dates: ['mini', 'pill'] },
     joy: { e: .85, sat: [.5, .78], tilt: 11, nSt: [4, 7], stSize: [70, 110],
-      bgs: { dots: 3, mesh: 3, rainbow: 1.5, gingham: 1.5, holo: 1, hearts: .5 },
+      bgs: { dots: 3, stripes: 2, gingham: 2, mesh: 1.5, paper: 1, hearts: .8, rainbow: .6 },
       fonts: { 'Rubik Mono One': 2, Pacifico: 2, Caveat: 2, Unbounded: 2, Lobster: 1, 'Amatic SC': 1 },
       frames: { polaroid: 3, tape: 2, stroke: 1.5, heart: 1, circle: 1 },
       grammars: { scatter: 4, hero: 2, stack: 1.5, grid: .5 },
       st: ['flash', 'star', 'sparkle', 'smile', 'cherry', 'rainbow', 'crown', 'candy', 'hearts', 'asterisk', 'bubble:{wow}'], dates: ['ticket', 'stamp', 'big'] },
     nostalgia: { e: .4, sat: [.22, .45], tilt: 7, nSt: [2, 4], stSize: [60, 92],
-      bgs: { kraft: 3, grain: 3, crumpled: 1.5, lined: 1, grid: .5 },
-      fonts: { 'Marck Script': 3, Lobster: 2, 'JetBrains Mono': 1.5, 'Cormorant Garamond': 1.5, 'Amatic SC': 1 },
+      bgs: { kraft: 3, paper: 2.5, grain: 2, lined: 1.5, crumpled: 1 },
+      fonts: { 'Marck Script': 3, 'Cormorant Garamond': 2, 'Bad Script': 1.5, Lobster: 1.5, 'JetBrains Mono': 1 },
       frames: { polaroid: 3, film: 2.5, tape: 2 },
       grammars: { stack: 3, strip: 2.5, hero: 2, scatter: 1 },
       st: ['film', 'camera', 'tape-k', 'label:core memory', 'star-line', 'note', 'leaf', 'clip', 'label:{year}'], dates: ['stamp', 'ticket'] },
     tender: { e: .45, sat: [.3, .55], tilt: 5, nSt: [3, 5], stSize: [60, 96],
-      bgs: { mesh: 3, hearts: 1.5, gingham: 1.5, holo: 1.5, grain: 1, dots: 1 },
-      fonts: { 'Marck Script': 3, 'Cormorant Garamond': 2.5, Caveat: 2, Pacifico: 1 },
+      bgs: { stripes: 3, paper: 2, hearts: 1.5, gingham: 1.5, mesh: 1 },
+      fonts: { 'Cormorant Garamond': 3, 'Marck Script': 2.5, 'Bad Script': 2, Caveat: 1.5 },
       frames: { polaroid: 2.5, round: 2, heart: 1.5, circle: 1 },
       grammars: { hero: 3, stack: 2, scatter: 1.5, split: 1.5 },
       st: ['heart', 'hearts', 'bow', 'butterfly', 'sparkle', 'tulip', 'daisy', 'heart-line', 'bubble:{love}'], dates: ['mini', 'big'] },
     tired: { e: .2, sat: [.12, .3], tilt: 3, nSt: [1, 2], stSize: [52, 74],
-      bgs: { paper: 2, lined: 2, grain: 2, crumpled: 1.5, grid: 1 },
+      bgs: { paper: 3, lined: 2.5, grain: 1.5, crumpled: 1 },
       fonts: { Neucha: 3, Caveat: 2, Onest: 1.5, 'Amatic SC': 1 },
       frames: { round: 2, polaroid: 2, none: 1 },
       grammars: { hero: 2, split: 2.5, grid: 2 },
       st: ['cup', 'cloud', 'moon', 'note', 'scribble', 'star-line', 'label:{remember}'], dates: ['mini'] },
     sad: { e: .2, sat: [.1, .28], tilt: 2, nSt: [0, 2], stSize: [50, 70],
-      bgs: { grain: 3, mesh: 1.5, paper: 1, crumpled: 1 },
+      bgs: { paper: 2.5, grain: 2.5, lined: 1, crumpled: 1 },
       fonts: { 'Cormorant Garamond': 3, 'Marck Script': 2, Onest: 1.5, Neucha: 1 },
       frames: { film: 2, round: 2, polaroid: 1.5, none: 1 },
       grammars: { split: 3, hero: 2.5, strip: 1.5 },
       st: ['cloud', 'moon', 'star-line', 'heart-line', 'note', 'scribble'], dates: ['mini'] },
     everyday: { e: .5, sat: [.25, .5], tilt: 6, nSt: [2, 4], stSize: [58, 90],
-      bgs: { grid: 2.5, dotgrid: 2.5, lined: 2, kraft: 1.5, paper: 1, gingham: 1 },
-      fonts: { Caveat: 3, Neucha: 2, Comfortaa: 1.5, Onest: 1.5, Unbounded: 1 },
+      bgs: { lined: 3, grid: 2.5, paper: 2.5, dotgrid: 1.5, kraft: 1 },
+      fonts: { Caveat: 3, 'Bad Script': 2, Neucha: 2, Comfortaa: 1 },
       frames: { polaroid: 3, tape: 2, round: 1.5 },
       grammars: { grid: 2, hero: 2, scatter: 2, stack: 1.5, strip: 1 },
       st: ['cup', 'note', 'asterisk', 'clip', 'pin', 'arrow', 'sun', 'scribble', 'bubble:{myday}'], dates: ['pill', 'mini', 'stamp'] }
@@ -56,7 +56,7 @@
   PV.MOOD_ADJ = { calm: 'спокойное', joy: 'радостное', nostalgia: 'ностальгическое', tender: 'нежное', tired: 'усталое', sad: 'грустное', everyday: 'повседневное' };
   PV.MOOD_COLORS = { calm: '#a8c8e0', joy: '#ffc46b', nostalgia: '#d6b48c', tender: '#f2a7c3', tired: '#b9b4c8', sad: '#8a9bb8', everyday: '#e8e2d6' };
   const DARK_BG = { stars: 3, grain: 2, mesh: 2, dotgrid: 1 };
-  const FONT_K = { 'Rubik Mono One': .58, Unbounded: .66, 'Amatic SC': 1.25, Pacifico: .82, 'JetBrains Mono': .68, Lobster: .92, 'Cormorant Garamond': 1.05, Comfortaa: .78, Onest: .78, Neucha: .95, Caveat: 1.1, 'Marck Script': 1.02 };
+  const FONT_K = { 'Bad Script': .95, 'Rubik Mono One': .58, Unbounded: .66, 'Amatic SC': 1.25, Pacifico: .82, 'JetBrains Mono': .68, Lobster: .92, 'Cormorant Garamond': 1.05, Comfortaa: .78, Onest: .78, Neucha: .95, Caveat: 1.1, 'Marck Script': 1.02 };
 
   // слова → настроение (только то, что человек сам написал или выбрал)
   const MOOD_WORDS = {
@@ -100,6 +100,7 @@
   /* ---------- утилиты ---------- */
   const hexRgb = h => { h = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)); };
   const hsl = rgb => U.rgb2hsl(...rgb);
+  const mixHex = (a, b, t) => { const x = hexRgb(a), y = hexRgb(b); return U.hex(x.map((c, i) => Math.round(c + (y[i] - c) * t))); };
   const hx = (h, s, l) => U.hex(U.hsl2rgb(h, U.clamp(s), U.clamp(l)));
   const mixHue = (a, b, t) => { const d = ((b - a + 540) % 360) - 180; return (a + d * t + 360) % 360; };
   const has = (text, stems) => stems.some(s => text.includes(s));
@@ -186,7 +187,7 @@
     h1 = (h1 + (rng() - .5) * 14 + 360) % 360;
     let sat = U.clamp(U.lerp(MD.sat[0], MD.sat[1], U.clamp(sBase + (E - .5) * .5)) * (fam ? fam.s : 1) * (minor ? .8 : 1), .05, .85);
     const lAdd = fam ? fam.l : 0;
-    const dark = (A.night && ['calm', 'nostalgia', 'sad', 'tender', 'everyday', 'tired'].includes(mood) && rng() < .8) || (ae && ae.dark && rng() < .6);
+    const dark = (A.night && ['calm', 'nostalgia', 'sad', 'tender', 'everyday', 'tired'].includes(mood) && rng() < .45) || (ae && ae.dark && rng() < .6);
     // фон
     let bgW = mergeW(MD.bgs, ae && ae.bgs && Object.fromEntries(Object.entries(ae.bgs).map(([k, v]) => [k, v * .6])));
     if (dark) bgW = Object.fromEntries(Object.entries(mergeW(DARK_BG, bgW)).filter(([k]) => DARK_BG[k]));
@@ -198,6 +199,7 @@
       c3 = hx(h1, .55, .3); c4 = hx(h2, .5, .26); ink = '#f6f1fb'; acc = hx(h2, .7, .66);
     } else {
       c1 = hx(h1, sat, U.clamp(.915 + rng() * .035 + lAdd, .86, .97)); c2 = hx(h2, U.clamp(sat + .15), U.clamp(.74 + rng() * .08 + lAdd));
+      c1 = mixHex(c1, '#f8f2e8', bgType === 'stripes' || bgType === 'dots' || bgType === 'gingham' ? .35 : .6);
       c3 = hx(h1, U.clamp(sat + .2), .8); c4 = hx(h2, U.clamp(sat + .25), .78);
       ink = hx(h1, .38, mood === 'joy' ? .2 : .18); acc = hx(h2, U.clamp(.55 + E * .3), .5);
     }
@@ -207,7 +209,7 @@
     const fW = mergeW(MD.fonts, ae && ae.fonts, V && V.font ? { [V.font]: 1.2 } : null);
     Object.keys(fW).forEach(k => fW[k] = tw('font:' + k, fW[k]));
     const font = pickW(fW, rng, opts.avoid && opts.avoid.font);
-    const hand = ['Caveat', 'Marck Script', 'Neucha', 'Amatic SC'].includes(font) ? font : pickW({ Caveat: 3, Neucha: 2, 'Marck Script': mood === 'tender' || mood === 'nostalgia' ? 3 : .5 }, rng);
+    const hand = ['Caveat', 'Marck Script', 'Neucha', 'Amatic SC', 'Bad Script'].includes(font) ? font : pickW({ Caveat: 3, 'Bad Script': 2.5, Neucha: 1.5, 'Marck Script': mood === 'tender' || mood === 'nostalgia' ? 3 : .5 }, rng);
     const frW = mergeW(MD.frames, ae && ae.frames); Object.keys(frW).forEach(k => frW[k] = tw('frame:' + k, frW[k]));
     const frame = pickW(frW, rng), frame2 = pickW(frW, rng, frame);
     const n = A.media.length;
@@ -332,10 +334,14 @@
     const capSrc = S.density > -2 ? (A.G && A.G.caption) || caption(inp, A) : '';
     let cs = Math.round(U.clamp(30 - capSrc.length * .06, 20, 28) * (S.hand === 'Amatic SC' ? 1.2 : 1));
     await ensureFont(S.font, size); if (capSrc) await ensureFont(S.hand, cs);
-    let tH = textH(title, size, tW, S.font), cH = capSrc ? textH(capSrc, cs, tW, S.hand) : 0;
-    const LIMIT = 690, GAP = 10;
-    const need = () => tH + (cH ? cH + 4 : 0);
-    const shrinkText = room => { for (let k = 0; k < 6 && need() > room; k++) { size = Math.round(size * .9); cs = Math.max(17, Math.round(cs * .93)); tH = textH(title, size, tW, S.font); cH = capSrc ? textH(capSrc, cs, tW, S.hand) : 0; } };
+    // вид подписи решаем до подгонки: рваный листок выше обычного текста и должен влезть целиком
+    const cr = rng(), torn = !!capSrc && !S.dark && cr < .5 && capSrc.length > 24, mark = !!capSrc && !torn && !S.dark && cr < .72;
+    const cw = torn ? Math.min(tW, 400) : tW;
+    const capH = () => (capSrc ? textH(capSrc, cs, cw, S.hand, torn) + (torn ? 12 : 0) : 0);
+    let tH = textH(title, size, tW, S.font), cH = capH();
+    const LIMIT = 690, GAP = 10, CG = torn ? 14 : 4;
+    const need = () => tH + (cH ? cH + CG : 0);
+    const shrinkText = room => { for (let k = 0; k < 6 && need() > room; k++) { size = Math.round(size * .9); cs = Math.max(17, Math.round(cs * .93)); tH = textH(title, size, tW, S.font); cH = capH(); } };
     // фото ужимаются к верху страницы, если тексту не хватает места
     const scalePhotos = (k, oy) => photos.forEach(p => { if (p.bleed) return; p.x = 270 + (p.x - 270) * k; p.y = oy + (p.y - oy) * k; p.w *= k; });
     const pTop = () => Math.min(...photos.filter(p => !p.bleed).map(p => pBox(p).y), 999), pBot = () => Math.max(...photos.map(p => pBox(p).y + pBox(p).h), 0);
@@ -358,13 +364,17 @@
       const it = Object.assign({}, p.m, { x: p.x, y: p.y, w: p.w, rot: p.rot, frame: p.frame, sc: S.dark ? '#f6f1fb' : '#fff', z: 10 + i, page: 0 });
       delete it.m; items.push(it); rects.push(pBox(p));
     });
+    if (photos.length && !S.dark && S.density > -2 && rng() < .7) { const p = photos[0]; if (!p.bleed && p.frame !== 'film') { const h = frameH(p.w, p.m.asp || .75, p.frame); add({ type: 'sticker', name: pickW({ 'tape-k': 2, 'tape-clear': 1.5, tape: 1 }, rng), x: p.x + (rng() - .5) * p.w * .2, y: p.y - h / 2 + 2, w: 118, rot: (rng() - .5) * 16, z: 31, color: null }); } }
     const txAlign = text.align, tx = txAlign === 'left' && !text.side ? M0 + tW / 2 : text.x;
     add({ type: 'text', role: 'title', text: title, font: S.font, size, color: S.ink, x: tx, y: ty, w: tW, rot: text.tilt || (S.E > .6 ? (rng() - .5) * 5 : 0), z: 32, bgs: 'none', align: txAlign }, box(tx, ty, tW, tH));
     let capBottom = ty + tH / 2;
     if (capSrc) {
-      let cy = text.top && text.under != null ? Math.min(pBot() + 8 + cH / 2, LIMIT - cH / 2) : ty + tH / 2 + 4 + cH / 2;
-      add({ type: 'text', role: 'caption', text: capSrc, font: S.hand, size: cs, color: S.ink, x: tx, y: cy, w: tW, rot: 0, z: 33, bgs: 'none', align: txAlign }, box(tx, cy, tW, cH));
-      capBottom = cy + cH / 2;
+      const ch = cH;
+      let cy = text.top && text.under != null ? Math.min(pBot() + 8 + ch / 2, LIMIT - ch / 2) : ty + tH / 2 + CG + ch / 2;
+      const cx = torn ? (txAlign === 'left' ? M0 + cw / 2 : U.clamp(tx + (rng() - .5) * 40, M0 + cw / 2, PW - M0 - cw / 2)) : tx;
+      add({ type: 'text', role: 'caption', text: capSrc, font: S.hand, size: cs, color: torn ? '#3a3346' : S.ink, x: cx, y: cy, w: cw, rot: torn ? (rng() - .5) * 4 : 0, z: 33, bgs: torn ? 'torn' : mark ? 'mark' : 'none', mark: mixHex(S.palette[1], '#ffffff', .2), align: torn ? 'left' : txAlign }, box(cx, cy, cw, ch));
+      if (torn) add({ type: 'sticker', name: 'clip', x: cx + cw * (rng() < .5 ? -.3 : .3), y: cy - ch / 2 - 4, w: 46, rot: (rng() - .5) * 20, z: 34, color: null });
+      capBottom = cy + ch / 2;
     }
     // дата, погода, место, песня
     const split = S.grammar === 'split';

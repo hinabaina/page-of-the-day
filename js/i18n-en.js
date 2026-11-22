@@ -171,7 +171,12 @@
     'Эмбиент': 'Ambient', 'Лоу-фай': 'Lo-fi', 'Акустика / фолк': 'Acoustic / folk', 'Этно': 'Ethno', 'Инди': 'Indie', 'Рок': 'Rock', 'Русский рок': 'Russian rock',
     'Пост-панк': 'Post-punk', 'Метал': 'Metal', 'Альтернатива': 'Alternative', 'Хип-хоп / рэп': 'Hip-hop / rap', 'Фонк': 'Phonk', 'Трип-хоп': 'Trip-hop', 'Синти-поп': 'Synth-pop',
     'Хаус': 'House', 'Техно': 'Techno', 'Саундтрек': 'Soundtrack', 'K-pop / Q-pop': 'K-pop / Q-pop',
-    'Готово, {n} фото': 'Done, {n} photos',
+    'дневник {n}': '{n}’s journal', 'Разворот сохранён картинкой': 'Spread saved as an image', 'Удалить день': 'Delete a day',
+    'День удалится из этого браузера насовсем. Если нужна копия — сначала сохрани дневник файлом в профиле.': 'The day will be removed from this browser for good. If you want a copy, save the diary as a file in your profile first.',
+    'День удалён': 'Day deleted', 'Нажми ещё раз, чтобы удалить': 'Tap again to delete', 'Открыть как книгу': 'Open as a book', 'Все дни сеткой': 'All days as a grid',
+    'листай развороты · нажми, чтобы открыть': 'swipe through spreads · tap to open', 'Книгой': 'Book view', 'Сеткой': 'Grid view', 'Поиск': 'Search',
+    'Сохранить разворот картинкой': 'Save spread as image', 'Дальше': 'Next',
+    'Готово, {n} фото': 'Done, {n} photos', 'Без узора': 'Plain', 'Горошек': 'Polka dots', 'Низ': 'Bottoms', 'Большие': 'Big',
     'Браузер не даёт сохранять — дни проживут до закрытия вкладки': 'This browser won’t let me save — your days will last until you close the tab'
   });
 })(window.PV);

@@ -1,10 +1,10 @@
 {
-  "name": "Страница дня",
-  "short_name": "Страница дня",
+  "name": "Folio",
+  "short_name": "Folio",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f3f2ef",
-  "theme_color": "#f3f2ef",
+  "background_color": "#3d4869",
+  "theme_color": "#3d4869",
   "lang": "ru",
   "icons": [
     {

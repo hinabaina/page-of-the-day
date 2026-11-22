@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<title>Страница дня</title>
+<title>Folio</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
-<meta name="theme-color" content="#0d0c11">
+<meta name="theme-color" content="#3d4869">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Страница дня">
+<meta name="apple-mobile-web-app-title" content="Folio">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@500;700&family=Comfortaa:wght@600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=JetBrains+Mono:wght@500&family=Lobster&family=Marck+Script&family=Neucha&family=Nunito:wght@600&family=Onest:wght@400;500;600;700;800&family=Pacifico&family=Rubik+Mono+One&family=Unbounded:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/aura.css">
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@500;700&family=Comfortaa:wght@600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=JetBrains+Mono:wght@500&family=Lobster&family=Marck+Script&family=Neucha&family=Bad+Script&family=Nunito:wght@600;800;900&family=Onest:wght@400;500;600;700;800&family=Pacifico&family=Rubik+Mono+One&family=Unbounded:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/folio.css">
 </head>
 <body>
 <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -44,11 +44,15 @@
 <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16l5-5 5 5 3-3 5 5"/></symbol>
 <symbol id="i-zip" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></symbol>
 <symbol id="i-why" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.5"/></symbol>
 <symbol id="i-pages" viewBox="0 0 24 24"><rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5"/></symbol>
 </defs></svg>
 
 <header class="bar">
-  <a class="logo" href="#home"><span class="logo-ic"></span><span><b data-i18n>страница дня</b><small data-i18n>дневник атмосферы</small></span></a>
+  <a class="logo" href="#home"><span class="logo-ic"></span><span><b>Folio</b><small data-i18n>дневник атмосферы</small></span></a>
   <div class="bar-r">
     <nav class="tabs-top glass">
       <a href="#home" data-nav="home"><svg><use href="#i-book"/></svg><span data-i18n>Дневник</span></a>
@@ -64,6 +68,23 @@
 <main>
   <!-- ДНЕВНИК -->
   <section id="v-home" class="view">
+    <div class="jtop">
+      <div class="jside"><button class="rbtn on" type="button" id="view-book" aria-label="Книгой" data-i18n-aria><svg><use href="#i-book"/></svg></button><button class="rbtn" type="button" id="view-grid" aria-label="Сеткой" data-i18n-aria><svg><use href="#i-grid"/></svg></button></div>
+      <div class="jt"><h1 id="j-title">дневник</h1><p class="jsub"><svg><use href="#i-eye"/></svg><span id="j-pages"></span></p></div>
+      <div class="jside r"><button class="rbtn" type="button" id="j-search" aria-label="Поиск" data-i18n-aria><svg><use href="#i-search"/></svg></button><a class="rbtn" href="#me" aria-label="Профиль" data-i18n-aria><svg><use href="#i-menu"/></svg></a></div>
+    </div>
+    <div id="home-book">
+      <div class="fan" id="fan"></div>
+      <div class="jbtns">
+        <button class="rbtn big" type="button" id="j-more" aria-label="Ещё" data-i18n-aria><svg><use href="#i-dots"/></svg></button>
+        <button class="rbtn big" type="button" id="j-share" aria-label="Сохранить разворот картинкой" data-i18n-aria><svg><use href="#i-share"/></svg></button>
+        <button class="rbtn big" type="button" id="j-del" aria-label="Удалить день" data-i18n-aria><svg><use href="#i-trash"/></svg></button>
+        <button class="rbtn big plus" type="button" id="j-add" aria-label="Добавить сегодняшний день" data-i18n-aria><svg><use href="#i-more"/></svg></button>
+      </div>
+      <p class="fan-hint" data-i18n>листай развороты · нажми, чтобы открыть</p>
+      <div class="qday glass" id="qday" hidden></div>
+    </div>
+    <div id="home-grid" hidden>
     <div class="home-hero">
       <div>
         <p class="k" id="hello-k"></p>
@@ -73,13 +94,13 @@
         <div id="vibe-sum"></div>
       </div>
       <div class="side-col">
-        <div class="qday glass" id="qday" hidden></div>
         <div id="memory" class="mem-col"></div>
       </div>
     </div>
     <div class="sec-row"><h2 class="sec"><span id="diary-name" data-i18n>Мои дни</span> <span id="days-count" class="count"></span></h2><input id="search" type="search" class="search" placeholder="Найти день: «какао», «концерт», «октябрь»…" data-i18n-ph aria-label="Поиск по дням" data-i18n-aria></div>
     <div class="days" id="days"></div>
     <div class="row"><label class="btn ghost"><span data-i18n>⇪ Добавить день друга</span><input type="file" id="import-home" accept=".json,application/json" hidden></label></div>
+    </div>
   </section>
 
   <!-- ДОБАВИТЬ ДЕНЬ -->
@@ -208,6 +229,16 @@
   </section>
 </main>
 
+<!-- открытая книга: листание разворотов -->
+<div class="book-ov" id="book" hidden>
+  <i class="fl f1">✿</i><i class="fl f2">✿</i><i class="fl f3">✿</i><i class="fl f4">✿</i>
+  <button class="rbtn bk-x" type="button" id="bk-x" aria-label="Закрыть" data-i18n-aria>✕</button>
+  <p class="bk-top" id="bk-top"></p>
+  <div class="bk-stage"><div class="bk" id="bk"></div></div>
+  <button class="rbtn bk-nav prev" type="button" id="bk-prev" aria-label="Назад" data-i18n-aria><svg><use href="#i-back"/></svg></button>
+  <button class="rbtn bk-nav next" type="button" id="bk-next" aria-label="Дальше" data-i18n-aria><svg style="transform:scaleX(-1)"><use href="#i-back"/></svg></button>
+  <p class="bk-cap" id="bk-cap"></p>
+</div>
 <!-- генерация -->
 <div class="genov" id="genov" hidden><div><div class="gorb" id="gorb"></div><b id="gen-h" data-i18n>Считываю атмосферу</b><p id="gen-p" data-i18n>свет фото, слова, ритм песни и твой стиль</p><div class="gsteps" id="gsteps"></div></div></div>
 <!-- нижние листы -->
@@ -234,6 +265,7 @@
 <script src="js/system.js"></script>
 <script src="js/zip.js"></script>
 <script src="js/stickers.js"></script>
+<script src="js/pixel-oc.js"></script>
 <script src="js/prompts.js"></script>
 <script src="js/taste.js"></script>
 <script src="js/gemini.js"></script>
