@@ -749,7 +749,7 @@
     $('#new2').onclick = startNew;
     $('#memory').innerHTML = memoryCard(); const mc = $('#memory .memory'); if (mc) mc.onclick = e => { e.preventDefault(); const d = st.days.find(x => x.id === mc.dataset.replay); if (d) replay(d); };
     const last = days.find(d => d.palette); setAccent(last && last.palette);
-    setHomeView(st.homeView || 'book');
+    renderCover();
   }
   // вопрос дня: не каждый день, без повторов подряд, можно пропустить
   function todayPrompt() {
@@ -785,11 +785,12 @@
   function bookSpreads() { const pg = bookPages(), out = []; for (let i = 0; i < pg.length; i += 2) out.push([pg[i], pg[i + 1] || null]); return out; }
   const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 10 || b >= 20) ? few : many; };
   const pagesLabel = n => PV.lang === 'en' ? `${n} ${n === 1 ? 'page' : 'pages'}` : `${n} ${plural(n, 'страница', 'страницы', 'страниц')}`;
-  function setHomeView(v) {
-    st.homeView = v; try { localStorage.setItem('pv-home-view', v); } catch (e) { }
-    $('#home-book').hidden = v !== 'book'; $('#home-grid').hidden = v === 'book';
-    $('#view-book').classList.toggle('on', v === 'book'); $('#view-grid').classList.toggle('on', v !== 'book');
-    if (v === 'book') renderFan();
+  // обложка дневника на лицевой странице: кнопка, которая открывает книгу
+  function renderCover() {
+    const n = bookPages().length;
+    $('#cover-title').textContent = diaries().length > 1 ? curDiary().name : T('дневник {n}', { n: capName(st.profile.name) });
+    $('#cover-pages').textContent = pagesLabel(n);
+    $('#cover-oc').innerHTML = PV.ocSvg(st.profile.oc);
   }
   function blankPage(cls = '') { return `<div class="leaf blank ${cls}"><button type="button" class="leaf-add" data-add="1"><b>+</b>${T('Добавить сегодняшний день')}</button></div>`; }
   function leafHtml(x, side) {
@@ -832,18 +833,16 @@
       openBook(i * 2 + (e.target.closest('.leaf.right') ? 1 : 0));
     });
     fan.addEventListener('wheel', e => { if (Math.abs(e.deltaX) < 25 && Math.abs(e.deltaY) < 25) return; if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) { e.preventDefault(); clearTimeout(fan.wt); fan.wt = setTimeout(() => fanGo(st.fanI + ((e.deltaX || e.deltaY) > 0 ? 1 : -1)), 40); } }, { passive: false });
-    $('#view-book').onclick = () => setHomeView('book'); $('#view-grid').onclick = () => setHomeView('grid');
-    $('#j-search').onclick = () => { setHomeView('grid'); setTimeout(() => $('#search').focus(), 50); };
     $('#j-add').onclick = startNew;
     $('#j-share').onclick = async () => { const s = bookSpreads()[st.fanI]; if (!s) return; const ims = await Promise.all(s.map(x => x ? pageImg(x.d, x.p, 1.5) : null)); const c = U.canvas(PW * 1.5 * 2, PH * 1.5), g = c.getContext('2d'); g.fillStyle = '#fbf7f1'; g.fillRect(0, 0, c.width, c.height); for (let k = 0; k < 2; k++) if (ims[k]) { const im = await loadImg(ims[k]); g.drawImage(im, k * PW * 1.5, 0); } U.download(await dataToBlob(c.toDataURL('image/jpeg', .9)), U.safeName((s[0].d.title || 'разворот')) + '.jpg'); toast(T('Разворот сохранён картинкой')); };
     $('#j-del').onclick = () => { const s = bookSpreads()[st.fanI]; if (!s) return; const ds = [...new Set(s.filter(Boolean).map(x => x.d))]; sheet(T('Удалить день'), `<p class="note">${T('День удалится из этого браузера насовсем. Если нужна копия — сначала сохрани дневник файлом в профиле.')}</p><div class="list">${ds.map(d => `<button type="button" data-del="${d.id}">${U.esc(d.title || T('Мой день'))}<small>${U.fmtDate(d.date)}</small></button>`).join('')}</div>`, r => r.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => { if (b.dataset.sure) { await DB.del('days', b.dataset.del); st.days = await DB.all('days'); closeSheet(); toast(T('День удалён')); route(); } else { b.dataset.sure = 1; b.insertAdjacentHTML('beforeend', `<small style="color:#d4475f">${T('Нажми ещё раз, чтобы удалить')}</small>`); } })); };
-    $('#j-more').onclick = () => { const s = bookSpreads()[st.fanI]; const d = s && (s[1] || s[0]).d; sheet(T('Дневник'), `<div class="list"><button type="button" data-m="open">${T('Открыть как книгу')}</button>${d ? `<button type="button" data-m="replay">${T('Прожить день')}<small>${U.esc(d.title || '')}</small></button>` : ''}<button type="button" data-m="grid">${T('Все дни сеткой')}</button><label class="btn ghost" style="justify-content:flex-start;border-radius:18px;min-height:52px">${T('⇪ Добавить день друга')}<input type="file" id="import-more" accept=".json,application/json" hidden></label></div>`, r => { r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { closeSheet(); const m = b.dataset.m; if (m === 'open') openBook(st.fanI * 2); if (m === 'replay') replay(d); if (m === 'grid') setHomeView('grid'); }); r.querySelector('#import-more').onchange = e => { const f = e.target.files[0]; closeSheet(); if (f) importFile(f); }; }); };
+    $('#j-more').onclick = () => { const s = bookSpreads()[st.fanI]; const d = s && (s[1] || s[0]).d; sheet(T('Дневник'), `<div class="list"><button type="button" data-m="open">${T('Открыть как книгу')}</button>${d ? `<button type="button" data-m="replay">${T('Прожить день')}<small>${U.esc(d.title || '')}</small></button>` : ''}<button type="button" data-m="grid">${T('Все дни сеткой')}</button><label class="btn ghost" style="justify-content:flex-start;border-radius:18px;min-height:52px">${T('⇪ Добавить день друга')}<input type="file" id="import-more" accept=".json,application/json" hidden></label></div>`, r => { r.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { closeSheet(); const m = b.dataset.m; if (m === 'open') openBook(st.fanI * 2); if (m === 'replay') replay(d); if (m === 'grid') location.hash = 'home'; }); r.querySelector('#import-more').onchange = e => { const f = e.target.files[0]; closeSheet(); if (f) importFile(f); }; }); };
     // книга
     $('#bk-x').onclick = closeBook; $('#bk-prev').onclick = () => flip(-1); $('#bk-next').onclick = () => flip(1);
     let bx = null; const bk = $('#bk');
     bk.addEventListener('pointerdown', e => { bx = e.clientX; });
     bk.addEventListener('pointerup', e => { const dx = bx == null ? 0 : e.clientX - bx; bx = null; if (Math.abs(dx) > 40) return flip(dx < 0 ? 1 : -1); if (e.target.closest('[data-add]')) { closeBook(); return startNew(); } const lf = e.target.closest('.leaf[data-day]'); if (lf && !st.bk.busy) { closeBook(); location.hash = 'day-' + lf.dataset.day; } });
-    addEventListener('keydown', e => { if (!$('#book').hidden) { if (e.key === 'ArrowRight') flip(1); if (e.key === 'ArrowLeft') flip(-1); if (e.key === 'Escape') closeBook(); return; } if (!$('#v-home').hidden && st.homeView === 'book' && !e.target.closest('input,textarea')) { if (e.key === 'ArrowRight') fanGo(st.fanI + 1); if (e.key === 'ArrowLeft') fanGo(st.fanI - 1); if (e.key === 'Enter') openBook(st.fanI * 2); } });
+    addEventListener('keydown', e => { if (!$('#book').hidden) { if (e.key === 'ArrowRight') flip(1); if (e.key === 'ArrowLeft') flip(-1); if (e.key === 'Escape') closeBook(); return; } if (!$('#v-diary').hidden && !e.target.closest('input,textarea')) { if (e.key === 'ArrowRight') fanGo(st.fanI + 1); if (e.key === 'ArrowLeft') fanGo(st.fanI - 1); if (e.key === 'Enter') openBook(st.fanI * 2); } });
     addEventListener('resize', () => { if (!$('#book').hidden) drawBook(); });
   }
   // открытая книга: на широком экране разворот из двух страниц, на узком — одна страница
@@ -854,7 +853,7 @@
     st.bk.i = st.bk.single ? U.clamp(pageIdx, 0, pages.length - 1) : Math.floor(U.clamp(pageIdx, 0, pages.length - 1) / 2) * 2;
     drawBook();
   }
-  function closeBook() { $('#book').hidden = true; document.body.classList.remove('in-book'); if (st.bk && !st.bk.single) { st.fanI = Math.floor(st.bk.i / 2); if (!$('#v-home').hidden) layoutFan(); } }
+  function closeBook() { $('#book').hidden = true; document.body.classList.remove('in-book'); if (st.bk && !st.bk.single) { st.fanI = Math.floor(st.bk.i / 2); if (!$('#v-diary').hidden) layoutFan(); } }
   // размеры экрана без учёта контента, вылезающего за край
   const vw = () => document.documentElement.clientWidth || innerWidth, vh = () => document.documentElement.clientHeight || innerHeight;
   const bkScale = () => (vw() > 1400 ? 1.3 : 1);
@@ -1055,7 +1054,7 @@
     const rp = $('#replay'); const two = d.pages === 2;
     const pal = d.palette && d.palette.length ? d.palette : ['#ff5a36', '#7a6cff', '#ffd27a'];
     rp.innerHTML = `<div class="rp-bg" style="background:radial-gradient(40% 40% at 25% 30%,${pal[0]},transparent 70%),radial-gradient(45% 40% at 75% 60%,${pal[1] || pal[0]},transparent 70%),radial-gradient(40% 40% at 50% 90%,${pal[2] || pal[0]},transparent 70%)"></div>
-      <p class="rp-note" id="rp-note"></p><div class="rp-stage spread${two ? ' two' : ''}" id="rp-stage"></div>
+      <p class="rp-note" id="rp-note"></p><div class="rp-box" id="rp-box"><div class="rp-stage spread${two ? ' two' : ''}" id="rp-stage"></div></div>
       <div class="rp-ui">${rpSong(d)}<button class="btn" type="button" id="rp-voice">🔊 ${T('Озвучить заметку')}</button><button class="btn" type="button" id="rp-again">↺ ${T('Ещё раз')}</button><button class="btn" type="button" id="rp-x">${T('Закрыть')}</button></div>`;
     rp.hidden = false;
     const stage = $('#rp-stage'); const beat = d.beat || (musicOf(d) ? 60 / musicOf(d).bpm : 1.4); stage.style.setProperty('--beat', beat.toFixed(2) + 's');
@@ -1069,7 +1068,9 @@
         stage.appendChild(pg);
       }
       st.ro = ro;
-      const sc = Math.min((innerWidth - 30) / (PW * d.pages), (innerHeight - 170) / PH); stage.style.transform = `scale(${sc})`; stage.style.marginTop = '40px';
+      // страница занимает своё место между заметкой и кнопками, а не лежит под ними
+      const sc = Math.min((innerWidth - 32) / (PW * d.pages), (innerHeight - 250) / PH); stage.style.transform = `scale(${sc})`;
+      const bx = $('#rp-box'); bx.style.width = PW * d.pages * sc + 'px'; bx.style.height = PH * sc + 'px';
       const note = (d.notes && d.notes.text) || ''; const ne = $('#rp-note'); ne.textContent = ''; let i = 0;
       setTimeout(function type() { if (rp.hidden) return; ne.textContent = note.slice(0, ++i); if (i < note.length) setTimeout(type, 35); }, 600 + k * 280);
       stage.querySelectorAll('.it').forEach(el => el.addEventListener('click', () => { const it = d.items.find(x => x.id === el.dataset.id); if (it && it.type === 'secret') { const c = st.cur; st.cur = d; openSecret(it); st.cur = c || d; } }));
@@ -1206,18 +1207,19 @@
   async function route() {
     const h = location.hash.slice(1) || 'home';
     if (!h.startsWith('day-') && !h.startsWith('friend-')) { await leaveEditor(); st.cur = null; }
-    const v = h.startsWith('day-') || h.startsWith('friend-') ? 'edit' : ['home', 'friends', 'me', 'photos', 'new'].includes(h) ? h : 'home';
+    const v = h.startsWith('day-') || h.startsWith('friend-') ? 'edit' : ['home', 'friends', 'me', 'photos', 'new', 'diary'].includes(h) ? h : 'home';
     $$('.view').forEach(x => x.hidden = x.id !== 'v-' + v);
     document.body.classList.toggle('in-edit', v === 'edit'); document.body.classList.toggle('in-new', v === 'new'); $('#ed-menu').hidden = true;
     if (v !== 'edit') document.body.classList.remove('mode-edit');
-    $$('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === v));
+    $$('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === (v === 'diary' ? 'home' : v)));
     renderShelf(); if (v === 'edit' || v === 'new') { $('#shelf').hidden = true; shelf(false); }
     if (st.profile) { $('#me-ava').innerHTML = PV.ocSvg(st.profile.oc); $('#me-name').textContent = st.profile.name.charAt(0).toUpperCase() + st.profile.name.slice(1); }
     if (v === 'home') renderHome();
     if (v === 'friends') renderFriends();
     if (v === 'photos') renderGallery();
-    if (v === 'me') { $('#me-oc').innerHTML = PV.ocSvg(st.profile.oc); $('#me-h').textContent = st.profile.name; $('#ai-key').value = aiCfg.key || ''; $('#ai-model').value = aiCfg.model || ''; }
+    if (v === 'me') { $('#me-oc').innerHTML = PV.ocSvg(st.profile.oc); $('#me-h').textContent = st.profile.name; }
     if (v === 'new') renderCompose();
+    if (v === 'diary') renderFan();
     if (h.startsWith('day-')) { const d = st.days.find(x => x.id === h.slice(4)) || await DB.get('days', h.slice(4)); if (!d) return location.hash = 'home'; d.blobs = d.blobs || {}; openEditor(d, false); }
     if (h.startsWith('friend-')) { const f = st.friends.find(x => x.id === h.slice(7)); if (!f) return location.hash = 'friends'; openEditor(f.day, true, f); }
     window.scrollTo(0, 0);
@@ -1254,8 +1256,6 @@
     document.addEventListener('click', e => { if (!e.target.closest('#ed-menu') && !e.target.closest('#ed-more')) $('#ed-menu').hidden = true; });
     $$('#ed-menu > button').forEach(b => b.addEventListener('click', () => { $('#ed-menu').hidden = true; }));
     $$('[data-lang]').forEach(b => { b.classList.toggle('on', b.dataset.lang === PV.lang); b.onclick = async () => { if (b.dataset.lang === PV.lang) return; await leaveEditor(); PV.setLang(b.dataset.lang); }; });
-    $('#ai-save').onclick = async () => { aiCfg = { key: $('#ai-key').value.trim(), model: $('#ai-model').value.trim() }; await DB.put('meta', 'ai', aiCfg); $('#ai-st').textContent = aiCfg.key ? T('Ключ сохранён в этом браузере') : T('Ключ удалён — работает встроенный движок'); };
-    $('#ai-test').onclick = async () => { const cfg = { key: $('#ai-key').value.trim(), model: $('#ai-model').value.trim() }; if (!cfg.key) return $('#ai-st').textContent = T('Сначала вставь ключ'); $('#ai-st').textContent = T('Проверяю…'); try { await PV.gemini.test(cfg); $('#ai-st').textContent = T('Gemini отвечает ✓'); } catch (e) { $('#ai-st').textContent = T('Ошибка: {e}', { e: e.message || e }); } };
     $('#ed-undo').onclick = undo; $('#ed-play').onclick = () => replay(st.cur);
     $('#ed-why').onclick = () => showWhy(st.cur); $('#ed-video').onclick = async () => { await saveDay(true); exportVideo(st.cur).catch(e => { console.error(e); toast(T('Не получилось записать видео')); }); }; $('#ed-zip').onclick = async () => { await saveDay(true); exportFolder(st.cur); };
     $('#search').oninput = e => { st.q = e.target.value; renderHome(); };
@@ -1270,9 +1270,8 @@
     addEventListener('resize', fit); addEventListener('hashchange', route);
     addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && st.cur && !e.target.closest('input,textarea,[contenteditable=true]')) { e.preventDefault(); undo(); return; } if ((e.key === 'Delete' || e.key === 'Backspace') && st.sel && !e.target.closest('input,textarea,[contenteditable=true]')) removeItem(st.sel); });
     initGestures(); initShelf(); initFan();
-    try { st.homeView = localStorage.getItem('pv-home-view') || 'book'; } catch (e) { st.homeView = 'book'; }
     const wrap = $('#ed-wrap'); wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.classList.add('drop'); }); wrap.addEventListener('dragleave', () => wrap.classList.remove('drop')); wrap.addEventListener('drop', async e => { e.preventDefault(); wrap.classList.remove('drop'); if (st.cur && !st.ro) { const fs = [...e.dataTransfer.files]; const vid = fs.find(f => f.type.startsWith('video/')); if (vid) await addVideo(vid); await addPhotos(fs.filter(f => f.type.startsWith('image/'))); } });
-    PV.applyI18n(); aiCfg = (await DB.get('meta', 'ai')) || {};
+    PV.applyI18n();
     st.profile = await DB.get('meta', 'profile'); st.diary = await DB.get('meta', 'curDiary') || 'main'; st.days = await DB.all('days') || []; st.friends = await DB.all('friends') || [];
     if (DB.mem) toast(T('Браузер не даёт сохранять — дни проживут до закрытия вкладки'), 5000);
     if (st.profile) applyVibe();

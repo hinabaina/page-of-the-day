@@ -176,6 +176,7 @@
     'День удалён': 'Day deleted', 'Нажми ещё раз, чтобы удалить': 'Tap again to delete', 'Открыть как книгу': 'Open as a book', 'Все дни сеткой': 'All days as a grid',
     'листай развороты · нажми, чтобы открыть': 'swipe through spreads · tap to open', 'Книгой': 'Book view', 'Сеткой': 'Grid view', 'Поиск': 'Search',
     'Сохранить разворот картинкой': 'Save spread as image', 'Дальше': 'Next',
+    'твой дневник-книга': 'your journal book', 'Открыть дневник': 'Open the journal', 'Листай страницы, как в настоящей тетради': 'Flip the pages like a real notebook', 'Открыть': 'Open',
     'Готово, {n} фото': 'Done, {n} photos', 'Без узора': 'Plain', 'Горошек': 'Polka dots', 'Низ': 'Bottoms', 'Большие': 'Big',
     'Браузер не даёт сохранять — дни проживут до закрытия вкладки': 'This browser won’t let me save — your days will last until you close the tab'
   });

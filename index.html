@@ -68,10 +68,34 @@
 <main>
   <!-- ДНЕВНИК -->
   <section id="v-home" class="view">
+    <div class="home-hero">
+      <div>
+        <p class="k" id="hello-k"></p>
+        <h1 id="hello-h">Как прошёл твой день?</h1>
+        <button class="cta glass" id="new-day" type="button"><span class="orb">+</span><span><b data-i18n>Добавить сегодняшний день</b><small data-i18n>Пара фото и пара слов — страницу соберу сама</small></span></button>
+        <div class="week" id="week"></div>
+        <div id="vibe-sum"></div>
+      </div>
+      <div class="side-col">
+        <a class="cover" href="#diary" id="open-diary">
+          <span class="cover-book"><span class="cover-oc" id="cover-oc"></span><b id="cover-title">дневник</b><small id="cover-pages"></small></span>
+          <span class="cover-txt"><span class="k" data-i18n>твой дневник-книга</span><b data-i18n>Открыть дневник</b><small data-i18n>Листай страницы, как в настоящей тетради</small><span class="btn pink small"><svg><use href="#i-book"/></svg><span data-i18n>Открыть</span></span></span>
+        </a>
+        <div class="qday glass" id="qday" hidden></div>
+        <div id="memory" class="mem-col"></div>
+      </div>
+    </div>
+    <div class="sec-row"><h2 class="sec"><span id="diary-name" data-i18n>Мои дни</span> <span id="days-count" class="count"></span></h2><input id="search" type="search" class="search" placeholder="Найти день: «какао», «концерт», «октябрь»…" data-i18n-ph aria-label="Поиск по дням" data-i18n-aria></div>
+    <div class="days" id="days"></div>
+    <div class="row"><label class="btn ghost"><span data-i18n>⇪ Добавить день друга</span><input type="file" id="import-home" accept=".json,application/json" hidden></label></div>
+  </section>
+
+  <!-- ДНЕВНИК-КНИГА: веер разворотов, по нажатию — листание -->
+  <section id="v-diary" class="view" hidden>
     <div class="jtop">
-      <div class="jside"><button class="rbtn on" type="button" id="view-book" aria-label="Книгой" data-i18n-aria><svg><use href="#i-book"/></svg></button><button class="rbtn" type="button" id="view-grid" aria-label="Сеткой" data-i18n-aria><svg><use href="#i-grid"/></svg></button></div>
+      <div class="jside"><a class="rbtn" href="#home" aria-label="Назад" data-i18n-aria><svg><use href="#i-back"/></svg></a></div>
       <div class="jt"><h1 id="j-title">дневник</h1><p class="jsub"><svg><use href="#i-eye"/></svg><span id="j-pages"></span></p></div>
-      <div class="jside r"><button class="rbtn" type="button" id="j-search" aria-label="Поиск" data-i18n-aria><svg><use href="#i-search"/></svg></button><a class="rbtn" href="#me" aria-label="Профиль" data-i18n-aria><svg><use href="#i-menu"/></svg></a></div>
+      <div class="jside r"></div>
     </div>
     <div id="home-book">
       <div class="fan" id="fan"></div>
@@ -82,24 +106,6 @@
         <button class="rbtn big plus" type="button" id="j-add" aria-label="Добавить сегодняшний день" data-i18n-aria><svg><use href="#i-more"/></svg></button>
       </div>
       <p class="fan-hint" data-i18n>листай развороты · нажми, чтобы открыть</p>
-      <div class="qday glass" id="qday" hidden></div>
-    </div>
-    <div id="home-grid" hidden>
-    <div class="home-hero">
-      <div>
-        <p class="k" id="hello-k"></p>
-        <h1 id="hello-h">Как прошёл твой день?</h1>
-        <button class="cta glass" id="new-day" type="button"><span class="orb">+</span><span><b data-i18n>Добавить сегодняшний день</b><small data-i18n>Пара фото и пара слов — страницу соберу сама</small></span></button>
-        <div class="week" id="week"></div>
-        <div id="vibe-sum"></div>
-      </div>
-      <div class="side-col">
-        <div id="memory" class="mem-col"></div>
-      </div>
-    </div>
-    <div class="sec-row"><h2 class="sec"><span id="diary-name" data-i18n>Мои дни</span> <span id="days-count" class="count"></span></h2><input id="search" type="search" class="search" placeholder="Найти день: «какао», «концерт», «октябрь»…" data-i18n-ph aria-label="Поиск по дням" data-i18n-aria></div>
-    <div class="days" id="days"></div>
-    <div class="row"><label class="btn ghost"><span data-i18n>⇪ Добавить день друга</span><input type="file" id="import-home" accept=".json,application/json" hidden></label></div>
     </div>
   </section>
 
@@ -148,13 +154,6 @@
         <p class="sub" data-i18n>Твой персонаж живёт в дневнике как стикер. Его можно поменять когда угодно.</p>
         <div class="row"><button class="btn white" id="edit-oc" type="button" data-i18n>Изменить персонажа</button><button class="btn ghost" id="edit-vibe" type="button" data-i18n>Пройти тест вайба заново</button><a class="btn ghost" href="atmosphere.html" data-i18n>Художественный режим</a></div>
         <div class="row"><button class="btn ghost" id="backup" type="button" data-i18n>Сохранить весь дневник файлом</button><label class="btn ghost"><span data-i18n>Восстановить из файла</span><input type="file" id="restore" accept=".json" hidden></label></div>
-        <div class="set">
-          <h3 data-i18n>AI-анализ через Gemini</h3>
-          <p class="note" data-i18n>Без ключа страницы собирает встроенный движок прямо в браузере. С ключом Gemini дополнительно смотрит, что на фото, и точнее подбирает детали и название. Фото и текст дня тогда отправляются в Google.</p>
-          <div class="field"><span data-i18n>Ключ Gemini API</span><input id="ai-key" type="password" autocomplete="off" placeholder="AIza…"></div>
-          <div class="field"><span data-i18n>Модель</span><input id="ai-model" placeholder="gemini-2.5-flash"></div>
-          <div class="row" style="margin-top:4px"><button class="btn white small" id="ai-save" type="button" data-i18n>Сохранить</button><button class="btn ghost small" id="ai-test" type="button" data-i18n>Проверить</button><span class="note" id="ai-st"></span></div>
-        </div>
         <p class="note" style="margin-top:18px" data-i18n>Всё хранится только в твоём браузере.</p>
       </div>
     </div>
